@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QueryQuest | Free SQL Lab</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f2f5fa;
+  color: #17243b;
+}
+header {
+  background: #14233d;
+  color: white;
+  padding: 22px 6%;
+}
+header a { color: #83e8d2; text-decoration: none; }
+main { max-width: 1100px; margin: 30px auto; padding: 0 16px; }
+h1 { margin-bottom: 8px; }
+.subtitle { color: #66758c; }
+.panel {
+  background: white;
+  border-radius: 14px;
+  padding: 24px;
+  margin: 20px 0;
+  box-shadow: 0 4px 18px #15244210;
+}
+select, textarea, button {
+  font: inherit;
+  border-radius: 8px;
+}
+select { padding: 12px; width: 100%; border: 1px solid #ccd4df; }
+textarea {
+  width: 100%;
+  min-height: 160px;
+  padding: 18px;
+  background: #14233d;
+  color: #e5f8f3;
+  font-family: Consolas, monospace;
+  font-size: 15px;
+  border: 0;
+  resize: vertical;
+}
+button {
+  background: #087f71;
+  color: white;
+  padding: 12px 22px;
+  border: 0;
+  margin: 10px 8px 0 0;
+  cursor: pointer;
+}
+button.secondary { background: #425572; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+#result { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+th, td { border: 1px solid #e1e5eb; padding: 10px; text-align: left; }
+th { background: #eef4f7; }
+#feedback { font-weight: bold; margin-top: 12px; }
+.note { color: #65748a; font-size: 14px; }
+</style>
+</head>
+<body>
+<header>
+  <strong>QueryQuest</strong>
+  <p><a href="index.html">← Back to Homepage</a></p>
+</header>
+
+<main>
+  <h1>Free SQL Practice Lab</h1>
+  <p class="subtitle">5 interactive challenges. Write SQL, run it, and check your answer.</p>
+
+  <section class="panel">
+    <h2>Practice Dataset: employees</h2>
+    <table>
+      <tr><th>emp_id</th><th>emp_name</th><th>department</th><th>salary</th></tr>
+      <tr><td>1</td><td>Ravi</td><td>IT</td><td>60000</td></tr>
+      <tr><td>2</td><td>Priya</td><td>HR</td><td>45000</td></tr>
+      <tr><td>3</td><td>Arjun</td><td>IT</td><td>75000</td></tr>
+      <tr><td>4</td><td>Sneha</td><td>Finance</td><td>50000</td></tr>
+      <tr><td>5</td><td>Kiran</td><td>IT</td><td>60000</td></tr>
+    </table>
+  </section>
+
+  <section class="panel">
+    <h2>Choose Your Challenge</h2>
+    <select id="challenge" onchange="changeChallenge()"></select>
+    <h3 id="question"></h3>
+    <p class="note">Use SQLite syntax. Enter a SELECT query.</p>
+    <textarea id="editor" spellcheck="false">SELECT * FROM employees;</textarea>
+    <br>
+    <button id="run" onclick="runQuery()" disabled>Run SQL</button>
+    <button id="check" onclick="checkAnswer()" disabled>Check Answer</button>
+    <button class="secondary" onclick="resetEditor()">Clear</button>
+    <div id="feedback" aria-live="polite">Loading SQL engine...</div>
+  </section>
+
+  <section class="panel">
+    <h2>Query Results</h2>
+    <div id="result">Run your query to see results.</div>
+  </section>
+
+  <section class="panel">
+    <h2>Premium SQL Lab</h2>
+    <p>45 additional challenges, hints and solutions.</p>
+    <strong>Coming soon — ₹499</strong>
+    <p class="note">Enrollment is not open yet.</p>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/sql-wasm.js"></script>
+<script>
+const questions = [
+  {
+    title: "Display IT employees",
+    prompt: "Show all columns for employees in the IT department.",
+    answer: "SELECT * FROM employees WHERE department = 'IT'"
+  },
+  {
+    title: "Find highest salary",
+    prompt: "Display the highest salary as highest_salary.",
+    answer: "SELECT MAX(salary) AS highest_salary FROM employees"
+  },
+  {
+    title: "Find second-highest salary",
+    prompt: "Display the second-highest distinct salary.",
+    answer: "SELECT DISTINCT salary FROM employees ORDER BY salary DESC LIMIT 1 OFFSET 1"
+  },
+  {
+    title: "Count employees by department",
+    prompt: "Show each department and its employee count as employee_count.",
+    answer: "SELECT department, COUNT(*) AS employee_count FROM employees GROUP BY department"
+  },
+  {
+    title: "Departments with more than 2 employees",
+    prompt: "Show the department and employee_count for departments with more than 2 employees.",
+    answer: "SELECT department, COUNT(*) AS employee_count FROM employees GROUP BY department HAVING COUNT(*) > 2"
+  }
+];
+
+let SQL;
+const challenge = document.getElementById("challenge");
+const editor = document.getElementById("editor");
+const feedback = document.getElementById("feedback");
+const result = document.getElementById("result");
+
+questions.forEach((q, i) => {
+  const option = document.createElement("option");
+  option.value = i;
+  option.textContent = `Lab ${i + 1}: ${q.title}`;
+  challenge.appendChild(option);
+});
+
+function changeChallenge() {
+  document.getElementById("question").textContent =
+    questions[Number(challenge.value)].prompt;
+  editor.value = "";
+  result.textContent = "Run your query to see results.";
+  feedback.textContent = "";
+}
+
+function resetEditor() {
+  editor.value = "";
+  result.textContent = "";
+  feedback.textContent = "";
+}
+
+function createDatabase() {
+  const db = new SQL.Database();
+  db.run(`
+    CREATE TABLE employees (
+      emp_id INTEGER,
+      emp_name TEXT,
+      department TEXT,
+      salary INTEGER
+    );
+    INSERT INTO employees VALUES
+      (1,'Ravi','IT',60000),
+      (2,'Priya','HR',45000),
+      (3,'Arjun','IT',75000),
+      (4,'Sneha','Finance',50000),
+      (5,'Kiran','IT',60000);
+  `);
+  return db;
+}
+
+function execute(query) {
+  if (!/^\s*SELECT\b/i.test(query.trim())) {
+    throw new Error("Only SELECT queries are supported in this lab.");
+  }
+  const db = createDatabase();
+  try {
+    return db.exec(query);
+  } finally {
+    db.close();
+  }
+}
+
+function runQuery() {
+  try {
+    const data = execute(editor.value);
+    showResults(data);
+    feedback.textContent = "Query executed successfully.";
+    feedback.style.color = "#087f71";
+  } catch (e) {
+    result.textContent = "";
+    feedback.textContent = "SQL error: " + e.message;
+    feedback.style.color = "#c23636";
+  }
+}
+
+function showResults(data) {
+  result.textContent = "";
+  if (!data.length) {
+    result.textContent = "No results returned.";
+    return;
+  }
+  const table = document.createElement("table");
+  const head = document.createElement("tr");
+  data[0].columns.forEach(c => {
+    const th = document.createElement("th");
+    th.textContent = c;
+    head.appendChild(th);
+  });
+  table.appendChild(head);
+
+  data[0].values.forEach(row => {
+    const tr = document.createElement("tr");
+    row.forEach(v => {
+      const td = document.createElement("td");
+      td.textContent = v === null ? "NULL" : String(v);
+      tr.appendChild(td);
+    });
+    table.appendChild(tr);
+  });
+  result.appendChild(table);
+}
+
+function normalize(data) {
+  if (!data.length) return "[]";
+  const rows = data[0].values.map(row => JSON.stringify(row));
+  return JSON.stringify({
+    columns: data[0].columns,
+    rows: rows.sort()
+  });
+}
+
+function checkAnswer() {
+  try {
+    const user = execute(editor.value);
+    const expected = execute(questions[Number(challenge.value)].answer);
+    const correct = normalize(user) === normalize(expected);
+    feedback.textContent = correct
+      ? "Correct! You solved this challenge."
+      : "Not quite. Check your selected columns and results, then try again.";
+    feedback.style.color = correct ? "#087f71" : "#c27b15";
+    showResults(user);
+  } catch (e) {
+    feedback.textContent = "SQL error: " + e.message;
+    feedback.style.color = "#c23636";
+  }
+}
+
+changeChallenge();
+
+async function start() {
+  try {
+    if (typeof initSqlJs !== "function") throw new Error("SQL engine unavailable");
+    SQL = await initSqlJs({
+      locateFile: file =>
+        "https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/" + file
+    });
+    document.getElementById("run").disabled = false;
+    document.getElementById("check").disabled = false;
+    feedback.textContent = "SQL lab ready!";
+    feedback.style.color = "#087f71";
+  } catch (e) {
+    feedback.textContent = "Could not load SQL engine. Check internet access.";
+  }
+}
+start();
+</script>
+</body>
+</html>
