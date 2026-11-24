@@ -1,0 +1,584 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Why Learn SQL? | QueryQuest</title>
+
+<style>
+:root {
+  --navy: #10263a;
+  --teal: #098b7c;
+  --cream: #faf5e9;
+  --text: #203447;
+  --muted: #607183;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--text);
+  font-family: "Segoe UI", Arial, sans-serif;
+  line-height: 1.75;
+}
+
+header {
+  background: var(--navy);
+  padding: 18px 6%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.logo {
+  color: white;
+  text-decoration: none;
+  font-size: 27px;
+  font-weight: bold;
+}
+
+.logo span {
+  color: #54e0bd;
+}
+
+.back-link {
+  color: #e1eeea;
+  text-decoration: none;
+}
+
+.hero {
+  background: linear-gradient(120deg, #10263a, #176b69);
+  color: white;
+  text-align: center;
+  padding: 55px 20px;
+}
+
+.eyebrow {
+  color: #83f0d7;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.hero h1 {
+  font-size: clamp(34px, 5vw, 52px);
+  margin: 12px 0;
+}
+
+.hero p {
+  color: #e4f2ef;
+  max-width: 720px;
+  margin: auto;
+  font-size: 17px;
+}
+
+main {
+  max-width: 1120px;
+  margin: auto;
+  padding: 35px 20px 70px;
+}
+
+.picture {
+  margin: 0 0 30px;
+  padding: 10px;
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 9px 30px rgba(20,35,45,0.12);
+}
+
+.picture img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+figcaption {
+  padding: 12px 5px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e9e0d2;
+  border-radius: 17px;
+  padding: 30px;
+  margin: 23px 0;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+}
+
+.card h2 {
+  margin: 10px 0 20px;
+  color: #123d46;
+  font-size: 27px;
+}
+
+.card p {
+  color: #536679;
+}
+
+.label {
+  display: inline-block;
+  background: #e2f6ee;
+  color: #087763;
+  border-radius: 30px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.benefits {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-top: 25px;
+}
+
+.benefit {
+  background: #f9faf7;
+  border: 1px solid #e3e9e1;
+  padding: 22px;
+  border-radius: 14px;
+}
+
+.benefit-icon {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.benefit h3 {
+  margin: 5px 0;
+  color: #174e4b;
+}
+
+.benefit p {
+  margin-bottom: 0;
+  font-size: 14px;
+}
+
+.benefit:last-child {
+  grid-column: 1 / -1;
+}
+
+.comparison {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin: 25px 0;
+}
+
+.comparison-box {
+  border-radius: 14px;
+  padding: 22px;
+  background: #f2f6f4;
+  border: 1px solid #dce8e1;
+}
+
+.comparison-box h3 {
+  margin-top: 0;
+  color: #126c61;
+}
+
+.comparison-box ul {
+  padding-left: 20px;
+}
+
+.comparison-box li {
+  margin: 10px 0;
+}
+
+.takeaway {
+  background: linear-gradient(120deg, #075d58, #118577);
+  color: white;
+  padding: 30px;
+  border-radius: 17px;
+  margin: 28px 0;
+}
+
+.takeaway p {
+  color: #e8f8f4;
+}
+
+.button {
+  display: inline-block;
+  background: var(--teal);
+  color: white;
+  padding: 13px 21px;
+  border-radius: 9px;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 8px 8px 0 0;
+}
+
+.button:hover {
+  background: #077567;
+}
+
+.disabled {
+  background: #e6e9ea;
+  color: #637382;
+  cursor: not-allowed;
+}
+
+footer {
+  background: var(--navy);
+  text-align: center;
+  color: white;
+  padding: 25px;
+}
+
+@media(max-width: 700px) {
+  .benefits,
+  .comparison {
+    grid-template-columns: 1fr;
+  }
+
+  .benefit:last-child {
+    grid-column: auto;
+  }
+
+  main {
+    padding: 22px 13px 45px;
+  }
+
+  .card {
+    padding: 21px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a class="logo" href="./index.html">
+    Query<span>Quest</span>
+  </a>
+
+  <a class="back-link" href="./index.html">
+    ← Homepage
+  </a>
+</header>
+
+<!-- PAGE HEADING -->
+<section class="hero">
+  <div class="eyebrow">
+    SQL INTRODUCTION · PAGE 2 OF 4
+  </div>
+
+  <h1>Why Learn SQL?</h1>
+
+  <p>
+    Discover the power of data, develop
+    analytical thinking and build practical
+    skills for the modern digital world.
+  </p>
+</section>
+
+<main>
+
+  <!-- VINTAGE IMAGE -->
+  <figure class="picture">
+    <img
+      src="./muted_vintage_sql_skills_poster.png"
+      alt="Vintage illustration showing how SQL transforms
+      unorganized records into meaningful insights">
+
+    <figcaption>
+      From raw information to organized data,
+      meaningful insights and better decisions.
+    </figcaption>
+  </figure>
+
+  <!-- INTRODUCTION -->
+  <section class="card">
+
+    <span class="label">WHY SQL MATTERS</span>
+
+    <h2>1. Why Is Learning SQL Important?</h2>
+
+    <p>
+      We live in a world driven by data.
+    </p>
+
+    <p>
+      Every day, businesses generate information
+      through customer interactions, financial
+      transactions, online services and
+      everyday operations.
+    </p>
+
+    <p>
+      However, collecting information alone
+      is not enough.
+    </p>
+
+    <p>
+      <strong>
+        The real value of data comes from
+        understanding it and using it
+        to make better decisions.
+      </strong>
+    </p>
+
+    <p>
+      This is where SQL becomes
+      an important skill.
+    </p>
+
+    <p>
+      SQL allows professionals to access,
+      explore, organize and analyze information
+      stored in relational databases.
+    </p>
+
+    <p>
+      Whether you are beginning your technology
+      journey or developing analytical skills,
+      SQL provides a strong foundation for
+      working with structured information.
+    </p>
+
+  </section>
+
+  <!-- FIVE BENEFITS -->
+  <section class="card">
+
+    <span class="label">BENEFITS OF SQL</span>
+
+    <h2>2. Five Reasons to Learn SQL</h2>
+
+    <div class="benefits">
+
+      <div class="benefit">
+        <div class="benefit-icon">📊</div>
+
+        <h3>Discover Meaningful Insights</h3>
+
+        <p>
+          SQL helps identify patterns,
+          summarize information and
+          discover useful insights
+          from large datasets.
+        </p>
+      </div>
+
+      <div class="benefit">
+        <div class="benefit-icon">💡</div>
+
+        <h3>Solve Problems with Confidence</h3>
+
+        <p>
+          Instead of manually examining
+          information, SQL helps you
+          ask precise questions and
+          investigate the answers.
+        </p>
+      </div>
+
+      <div class="benefit">
+        <div class="benefit-icon">🧠</div>
+
+        <h3>Develop Analytical Thinking</h3>
+
+        <p>
+          Learning SQL strengthens logical
+          reasoning, problem-solving and
+          the ability to understand
+          organized information.
+        </p>
+      </div>
+
+      <div class="benefit">
+        <div class="benefit-icon">💼</div>
+
+        <h3>Build a Versatile Technical Skill</h3>
+
+        <p>
+          SQL knowledge is useful in
+          analytics, software development,
+          business intelligence and
+          data engineering.
+        </p>
+      </div>
+
+      <div class="benefit">
+        <div class="benefit-icon">🗄️</div>
+
+        <h3>Build a Foundation for Advanced Technologies</h3>
+
+        <p>
+          SQL helps you understand relational
+          databases, data warehouses,
+          cloud data platforms and
+          modern analytics systems.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- HOW SQL CHANGES YOUR WORK -->
+  <section class="card">
+
+    <span class="label">PRACTICAL VALUE</span>
+
+    <h2>3. How SQL Changes the Way You Work</h2>
+
+    <p>
+      Imagine having access to a large
+      collection of organized information.
+    </p>
+
+    <p>
+      Without SQL knowledge, you may
+      need help from someone else
+      to retrieve the information you need.
+    </p>
+
+    <p>
+      With SQL knowledge and appropriate
+      database access, you can learn
+      to explore records, investigate
+      questions and summarize results
+      independently.
+    </p>
+
+    <div class="comparison">
+
+      <div class="comparison-box">
+        <h3>Without SQL Knowledge</h3>
+
+        <ul>
+          <li>May depend on others for database queries.</li>
+          <li>May struggle to investigate large datasets.</li>
+          <li>Has limited ability to explore relational data.</li>
+        </ul>
+      </div>
+
+      <div class="comparison-box">
+        <h3>With SQL Knowledge</h3>
+
+        <ul>
+          <li>Can write queries to retrieve information.</li>
+          <li>Can explore and summarize data.</li>
+          <li>Can investigate questions more independently.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <p>
+      <strong>
+        SQL helps you move from simply
+        viewing data to actively
+        exploring and understanding it.
+      </strong>
+    </p>
+
+  </section>
+
+  <!-- MORE THAN A TECHNICAL SKILL -->
+  <section class="card">
+
+    <span class="label">LEARNING MINDSET</span>
+
+    <h2>4. SQL Is More Than Memorizing Commands</h2>
+
+    <p>
+      SQL is not only about remembering
+      statements and syntax.
+    </p>
+
+    <p>
+      It is about understanding information,
+      asking the right questions and
+      finding meaningful answers.
+    </p>
+
+    <p>
+      As you develop your SQL skills,
+      you will learn to:
+    </p>
+
+    <ul>
+      <li>Understand how structured data is organized.</li>
+      <li>Retrieve relevant information.</li>
+      <li>Combine and compare related information.</li>
+      <li>Recognize patterns and trends.</li>
+      <li>Explain your findings clearly.</li>
+      <li>Apply logical thinking to practical problems.</li>
+    </ul>
+
+    <p>
+      These skills are valuable across
+      many technical and analytical fields.
+    </p>
+
+  </section>
+
+  <!-- KEY TAKEAWAY -->
+  <section class="takeaway">
+
+    <h2>5. Key Takeaway</h2>
+
+    <p>
+      Learning SQL is about more than
+      writing queries.
+    </p>
+
+    <p>
+      It is about developing the ability
+      to understand data, solve problems
+      and make informed decisions.
+    </p>
+
+    <p>
+      SQL provides a foundation for
+      practical data skills that can
+      grow alongside your career.
+    </p>
+
+  </section>
+
+  <!-- NAVIGATION -->
+  <section class="card">
+
+    <span class="label">CONTINUE LEARNING</span>
+
+    <h2>Your SQL Learning Journey</h2>
+
+    <a class="button" href="./sql-introduction.html">
+      ← Page 1: What Is SQL?
+    </a>
+
+    <a class="button" href="./index.html">
+      Back to Homepage
+    </a>
+
+    <span class="button disabled">
+      Page 3: SQL Job Market — Coming Soon
+    </span>
+
+  </section>
+
+</main>
+
+<footer>
+  <strong>QueryQuest</strong>
+  <p>Learn SQL. Practice Queries. Master Interviews.</p>
+</footer>
+
+</body>
+</html>
