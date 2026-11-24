@@ -3,84 +3,644 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>QueryQuest | Learn SQL Online</title>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>QueryQuest | Learn SQL by Practicing</title>
+
   <style>
+    :root {
+      --navy: #101d35;
+      --blue: #17365c;
+      --teal: #0a9989;
+      --light: #f4f7fb;
+      --text: #1a2940;
+      --muted: #65748b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      background: #f5f7fb;
-      text-align: center;
+      font-family: Arial, sans-serif;
+      background: var(--light);
+      color: var(--text);
     }
+
+    /* Navigation */
     header {
-      background: #12213a;
+      background: var(--navy);
+      padding: 20px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
       color: white;
-      padding: 55px 20px;
+      text-decoration: none;
     }
-    h1 { font-size: 40px; }
-    .container { padding: 30px 15px; }
-    .card {
-      background: white;
-      padding: 25px;
-      margin: 15px auto;
-      border-radius: 12px;
-      max-width: 600px;
-      box-shadow: 0 3px 12px #ddd;
+
+    .logo span {
+      color: #4fe0c3;
     }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #e1e9f2;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: #4fe0c3;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(
+        120deg,
+        #101d35,
+        #18476a,
+        #0d8178
+      );
+
+      color: white;
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .hero-label {
+      color: #6cf0d4;
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(34px, 5vw, 55px);
+      max-width: 850px;
+      margin: 20px auto;
+      line-height: 1.15;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #dce9f4;
+      max-width: 650px;
+      margin: 0 auto 30px;
+      line-height: 1.6;
+    }
+
     .button {
       display: inline-block;
-      background: #087e8b;
+      background: var(--teal);
       color: white;
-      padding: 12px 24px;
+      border: none;
+      padding: 13px 22px;
+      margin: 6px;
+      border-radius: 9px;
       text-decoration: none;
-      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .button:hover {
+      background: #08796d;
+    }
+
+    .button-white {
+      background: white;
+      color: #17365c;
+    }
+
+    .button-white:hover {
+      background: #e8f2f6;
+    }
+
+    /* Highlights */
+    .highlights {
+      max-width: 900px;
+      margin: 35px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      text-align: center;
+    }
+
+    .highlight {
+      background: white;
+      border-radius: 12px;
+      padding: 20px 10px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .highlight strong {
+      display: block;
+      color: var(--teal);
+      font-size: 28px;
+    }
+
+    .highlight span {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* Course cards */
+    .container {
+      max-width: 1150px;
+      margin: auto;
+      padding: 35px 20px 75px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    .course-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+      transition: transform 0.2s,
+                  box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+    }
+
+    .card-icon {
+      width: 55px;
+      height: 55px;
+      border-radius: 13px;
+      background: #e4f7f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 27px;
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      font-size: 22px;
+      margin: 15px 0 12px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+      min-height: 75px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 13px;
+      border-radius: 25px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .free {
+      background: #ddf8ed;
+      color: #07805f;
+    }
+
+    .premium {
+      background: #eee8ff;
+      color: #6543b5;
+    }
+
+    .card .button {
+      margin: 12px 0 0;
+    }
+
+    /* Membership section */
+    .membership {
+      margin-top: 55px;
+      padding: 38px 25px;
+      text-align: center;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+    }
+
+    .membership h2 {
+      font-size: 29px;
+      margin: 12px 0;
+    }
+
+    .price {
+      font-size: 40px;
+      color: var(--teal);
+      font-weight: bold;
+    }
+
+    .membership p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* Preview popup */
+    dialog {
+      width: min(500px, 90%);
+      border: none;
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 20px 70px rgba(0,0,0,0.3);
+    }
+
+    dialog::backdrop {
+      background: rgba(10,20,40,0.65);
+    }
+
+    dialog h2 {
+      color: var(--navy);
+    }
+
+    dialog p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    footer {
+      background: var(--navy);
+      color: #c4d1df;
+      padding: 30px 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    /* Mobile layout */
+    @media (max-width: 600px) {
+      header {
+        justify-content: center;
+        text-align: center;
+      }
+
+      nav {
+        justify-content: center;
+      }
+
+      .hero {
+        padding: 60px 18px;
+      }
+
+      .highlights {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 8px;
+        padding: 0 10px;
+      }
+
+      .highlight {
+        padding: 16px 5px;
+      }
+
+      .highlight strong {
+        font-size: 21px;
+      }
+
+      .highlight span {
+        font-size: 11px;
+      }
+
+      .section-title {
+        font-size: 28px;
+      }
     }
   </style>
 </head>
+
 <body>
+
+  <!-- Navigation -->
   <header>
-    <h1>QueryQuest</h1>
-    <p>Learn SQL. Practice Queries. Master Interviews.</p>
+    <a class="logo" href="index.html">
+      Query<span>Quest</span>
+    </a>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#courses">Explore SQL</a>
+      <a href="./lab.html">Free Labs</a>
+      <a href="#membership">Premium</a>
+    </nav>
   </header>
-  
 
-  <main class="container">
-    
-<div class="card">
-  <h2>Start Your Free SQL Practice</h2>
-  <p>Practice 5 SQL challenges with real queries.</p>
-  <a class="button" href="./lab.html">
-    Start Free SQL Lab
-  </a>
-</div>
-
-    <div class="card">
-      <h2>Why Learn SQL?</h2>
-      <p>SQL is widely used in data analytics, finance,
-      cloud applications and business reporting.</p>
+  <!-- Welcome section -->
+  <section class="hero">
+    <div class="hero-label">
+      Interactive SQL Learning Platform
     </div>
 
-    <div class="card">
-      <h2>50 SQL Learning Challenges</h2>
-      <p>Learn SQL through five practical modules.</p>
+    <h1>
+      Learn SQL. Practice Smarter.
+      Master Interviews.
+    </h1>
+
+    <p>
+      Build real SQL skills through practical
+      lessons, interactive challenges,
+      and hands-on database exercises.
+    </p>
+
+    <a href="#courses" class="button button-white">
+      Explore Learning Paths
+    </a>
+
+    <a href="./lab.html" class="button">
+      Try 5 Free SQL Labs
+    </a>
+  </section>
+
+  <!-- Course highlights -->
+  <section class="highlights">
+    <div class="highlight">
+      <strong>5</strong>
+      <span>Free SQL Labs</span>
     </div>
 
-    <div class="card">
-      <h2>Free SQL Practice Lab</h2>
-      <p>Practice 5 SQL challenges for free.</p>
+    <div class="highlight">
+      <strong>50</strong>
+      <span>Planned Lessons</span>
+    </div>
 
-      <a href="./lab.html" class="button">
-      Start Free SQL Lab
-     </a>
+    <div class="highlight">
+      <strong>50</strong>
+      <span>Planned Premium Labs</span>
+    </div>
+  </section>
+
+  <!-- Main five sections -->
+  <main class="container" id="courses">
+
+    <h2 class="section-title">
+      Choose Your Learning Path
+    </h2>
+
+    <p class="section-subtitle">
+      Start with the fundamentals, learn practical
+      SQL queries, and develop your skills
+      through interactive challenges.
+    </p>
+
+    <div class="course-grid">
+
+      <!-- Section 1 -->
+      <article class="card">
+        <div class="card-icon">📘</div>
+
+        <span class="badge free">FREE</span>
+
+        <h3>1. SQL Introduction</h3>
+
+        <p>
+          Discover what SQL is, how it started,
+          why companies use it, and the career
+          opportunities available today.
+        </p>
+
+        <button class="button"
+          onclick="openPreview('intro')">
+          Explore SQL
+        </button>
+      </article>
+
+      <!-- Section 2 -->
+      <article class="card">
+        <div class="card-icon">⌨️</div>
+
+        <span class="badge free">FREE</span>
+
+        <h3>2. Basic SQL Queries</h3>
+
+        <p>
+          Learn SELECT, WHERE, DISTINCT,
+          ORDER BY, JOIN, GROUP BY,
+          HAVING and more with examples.
+        </p>
+
+        <button class="button"
+          onclick="openPreview('basic')">
+          Learn SQL Queries
+        </button>
+      </article>
+
+      <!-- Section 3 -->
+      <article class="card">
+        <div class="card-icon">💻</div>
+
+        <span class="badge free">5 FREE LABS</span>
+
+        <h3>3. Interactive SQL Labs</h3>
+
+        <p>
+          Write SQL queries, execute them
+          against sample data and check
+          your answers in a real SQL editor.
+        </p>
+
+        <a class="button" href="./lab.html">
+          Start Free SQL Labs
+        </a>
+      </article>
+
+      <!-- Section 4 -->
+      <article class="card">
+        <div class="card-icon">🎓</div>
+
+        <span class="badge premium">
+          PREMIUM
+        </span>
+
+        <h3>4. 50 SQL Learning Lessons</h3>
+
+        <p>
+          Structured learning modules covering
+          SQL fundamentals, aggregations,
+          joins, subqueries and interviews.
+        </p>
+
+        <button class="button"
+          onclick="openPreview('lessons')">
+          Explore Premium Lessons
+        </button>
+      </article>
+
+      <!-- Section 5 -->
+      <article class="card">
+        <div class="card-icon">🔒</div>
+
+        <span class="badge premium">
+          PREMIUM
+        </span>
+
+        <h3>5. 50 SQL Practice Labs</h3>
+
+        <p>
+          Work through advanced challenges,
+          real interview scenarios and
+          hands-on database problems.
+        </p>
+
+        <button class="button"
+          onclick="openPreview('premiumLabs')">
+          Explore Premium Labs
+        </button>
+      </article>
 
     </div>
 
-    <div class="card">
-      <h2>Premium SQL Lab</h2>
-      <p>Unlock 45 additional practice challenges.</p>
-      <p><strong>Launch Price: ₹499</strong></p>
-      <p>Paid enrollment is not open yet.</p>
-    </div>
+    <!-- Membership -->
+    <section class="membership" id="membership">
+
+      <span class="badge premium">
+        PREMIUM MEMBERSHIP
+      </span>
+
+      <h2>Take Your SQL Skills Further</h2>
+
+      <div class="price">₹499</div>
+
+      <p>
+        Planned access to 50 SQL learning lessons
+        and 50 premium SQL practice labs.
+      </p>
+
+      <p>
+        Complete the free labs first.
+        Premium enrollment is coming soon.
+      </p>
+
+      <button class="button"
+        onclick="openPreview('membership')">
+        View Membership Details
+      </button>
+
+    </section>
+
   </main>
+
+  <!-- Preview popup -->
+  <dialog id="previewDialog">
+    <h2 id="previewTitle"></h2>
+    <p id="previewDescription"></p>
+
+    <button class="button"
+      onclick="document.getElementById('previewDialog').close()">
+      Back to Homepage
+    </button>
+  </dialog>
+
+  <!-- Footer -->
+  <footer>
+    <strong>QueryQuest</strong>
+    <p>Learn SQL. Practice Queries. Master Interviews.</p>
+    <p>© QueryQuest. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const previews = {
+      intro: {
+        title: "SQL Introduction",
+        description:
+          "This section will contain four pages: " +
+          "What Is SQL and Its History, Why Learn SQL, " +
+          "SQL in Today's Job Market, and Real-World Uses. " +
+          "We will build these pages next."
+      },
+
+      basic: {
+        title: "Basic SQL Queries",
+        description:
+          "This section will contain beginner-friendly " +
+          "SQL queries with practical examples, " +
+          "explanations, and expected results. " +
+          "We will add them after the introduction."
+      },
+
+      lessons: {
+        title: "50 SQL Learning Lessons",
+        description:
+          "Premium learning modules are being developed. " +
+          "They will be available to subscribed students " +
+          "after secure login and payment verification."
+      },
+
+      premiumLabs: {
+        title: "50 Premium SQL Practice Labs",
+        description:
+          "These labs will include interactive SQL " +
+          "challenges and answer checking. " +
+          "Paid enrollment is not available yet."
+      },
+
+      membership: {
+        title: "QueryQuest Premium Membership",
+        description:
+          "Planned launch price: ₹499. " +
+          "Membership will include 50 SQL lessons " +
+          "and 50 premium practice labs. " +
+          "Payments are not being collected yet."
+      }
+    };
+
+    function openPreview(section) {
+      const item = previews[section];
+
+      if (!item) return;
+
+      document.getElementById(
+        "previewTitle"
+      ).textContent = item.title;
+
+      document.getElementById(
+        "previewDescription"
+      ).textContent = item.description;
+
+      document.getElementById(
+        "previewDialog"
+      ).showModal();
+    }
+  </script>
+
 </body>
 </html>
