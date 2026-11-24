@@ -1,0 +1,914 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Basic SQL Queries | QueryQuest</title>
+
+<style>
+:root {
+  --navy: #10263a;
+  --teal: #098b7c;
+  --cream: #faf5e9;
+  --text: #203447;
+  --muted: #607183;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--text);
+  font-family: "Segoe UI", Arial, sans-serif;
+  line-height: 1.7;
+}
+
+header {
+  background: var(--navy);
+  padding: 18px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.logo {
+  color: white;
+  font-size: 27px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.logo span {
+  color: #54e0bd;
+}
+
+.back-link {
+  color: #e1eeea;
+  text-decoration: none;
+}
+
+.hero {
+  background: linear-gradient(120deg, #10263a, #176b69);
+  color: white;
+  text-align: center;
+  padding: 65px 20px;
+}
+
+.eyebrow {
+  color: #83f0d7;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.hero h1 {
+  font-size: clamp(32px, 5vw, 52px);
+  margin: 12px 0;
+}
+
+.hero p {
+  color: #e4f2ef;
+  font-size: 17px;
+  max-width: 730px;
+  margin: auto;
+}
+
+main {
+  max-width: 1080px;
+  margin: auto;
+  padding: 35px 20px 70px;
+}
+
+.card {
+  background: white;
+  padding: 30px;
+  margin: 22px 0;
+  border-radius: 16px;
+  border: 1px solid #e9e0d2;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+}
+
+.card h2 {
+  color: #123d46;
+  margin-top: 0;
+}
+
+.card p {
+  color: #536679;
+}
+
+.label {
+  display: inline-block;
+  background: #e2f6ee;
+  color: #087763;
+  border-radius: 25px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.table-scroll {
+  overflow-x: auto;
+  margin: 20px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th, td {
+  border: 1px solid #dce5e6;
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background: #e5f4ef;
+  color: #174f48;
+}
+
+tr:nth-child(even) {
+  background: #fafcfb;
+}
+
+/* Clickable query cards */
+.query-card {
+  background: white;
+  margin: 18px 0;
+  border-radius: 16px;
+  border: 1px solid #e3e6e2;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+  overflow: hidden;
+}
+
+.query-card summary {
+  padding: 23px;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 17px;
+}
+
+.query-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.query-card summary:hover {
+  background: #f4faf7;
+}
+
+.number {
+  background: #e2f6ee;
+  color: #087763;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 13px;
+  border-radius: 11px;
+  min-width: 54px;
+  text-align: center;
+}
+
+.query-heading {
+  flex: 1;
+}
+
+.query-heading h3 {
+  margin: 0 0 5px;
+  color: #173d49;
+  font-size: 20px;
+}
+
+.query-heading p {
+  margin: 0;
+  color: #617286;
+  font-size: 14px;
+}
+
+.arrow {
+  color: var(--teal);
+  font-size: 22px;
+  transition: transform .2s;
+}
+
+.query-card[open] .arrow {
+  transform: rotate(180deg);
+}
+
+.query-content {
+  border-top: 1px solid #e8eeec;
+  padding: 25px;
+}
+
+.query-content h4 {
+  color: #135b55;
+  margin: 22px 0 10px;
+  font-size: 17px;
+}
+
+.query-content h4:first-child {
+  margin-top: 0;
+}
+
+.sql-box {
+  background: #11263b;
+  border-radius: 12px;
+  padding: 20px;
+  overflow-x: auto;
+  color: #d9fff4;
+}
+
+.sql-box pre {
+  margin: 0;
+  font: 15px/1.7 Consolas, monospace;
+}
+
+.explanation {
+  background: #eff8f4;
+  padding: 18px;
+  border-left: 4px solid #098b7c;
+  border-radius: 9px;
+  color: #315b58;
+}
+
+.note {
+  background: #fff7e8;
+  border-left: 4px solid #c18d42;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 18px 0;
+}
+
+.button {
+  display: inline-block;
+  background: var(--teal);
+  color: white;
+  padding: 13px 21px;
+  border-radius: 9px;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 8px 8px 0 0;
+}
+
+.button:hover {
+  background: #087466;
+}
+
+.takeaway {
+  background: linear-gradient(120deg, #075d58, #118577);
+  color: white;
+  padding: 30px;
+  border-radius: 17px;
+  margin: 35px 0;
+}
+
+.takeaway p {
+  color: #e6f8f3;
+}
+
+footer {
+  background: var(--navy);
+  color: white;
+  text-align: center;
+  padding: 25px;
+}
+
+@media(max-width:600px) {
+  main {
+    padding: 22px 13px 45px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .query-card summary {
+    padding: 16px;
+    gap: 10px;
+  }
+
+  .query-heading h3 {
+    font-size: 17px;
+  }
+
+  .query-content {
+    padding: 18px;
+  }
+
+  .number {
+    min-width: 42px;
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  .hero {
+    padding: 45px 18px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a class="logo" href="./index.html">
+    Query<span>Quest</span>
+  </a>
+
+  <a class="back-link" href="./index.html">
+    ← Homepage
+  </a>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">
+    QUERYQUEST · FREE SQL LEARNING
+  </div>
+
+  <h1>10 Essential SQL Queries</h1>
+
+  <p>
+    Learn SQL through practical questions,
+    real query examples, simple explanations
+    and expected results.
+  </p>
+</section>
+
+<main>
+
+  <!-- DATASET -->
+  <section class="card">
+    <span class="label">PRACTICE DATASET</span>
+
+    <h2>Meet Your Employee Database</h2>
+
+    <p>
+      We will use the following sample
+      employee records to understand SQL.
+    </p>
+
+    <p>
+      Click any query below to see
+      how SQL works with this information.
+    </p>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>emp_id</th>
+            <th>emp_name</th>
+            <th>department</th>
+            <th>salary</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>1</td><td>Ravi</td>
+            <td>IT</td><td>60000</td>
+          </tr>
+
+          <tr>
+            <td>2</td><td>Priya</td>
+            <td>HR</td><td>45000</td>
+          </tr>
+
+          <tr>
+            <td>3</td><td>Arjun</td>
+            <td>IT</td><td>75000</td>
+          </tr>
+
+          <tr>
+            <td>4</td><td>Sneha</td>
+            <td>Finance</td><td>50000</td>
+          </tr>
+
+          <tr>
+            <td>5</td><td>Kiran</td>
+            <td>IT</td><td>60000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      These are fictional employee records
+      created for SQL learning.
+    </div>
+  </section>
+
+  <section>
+    <h2>Explore Your SQL Queries</h2>
+    <p>
+      Select a question to reveal
+      its SQL statement, explanation
+      and expected result.
+    </p>
+  </section>
+
+  <!-- QUERY 1 -->
+  <details class="query-card">
+    <summary>
+      <span class="number">01</span>
+
+      <div class="query-heading">
+        <h3>SELECT — Retrieve Records</h3>
+        <p>Display all employee details.</p>
+      </div>
+
+      <span class="arrow">⌄</span>
+    </summary>
+
+    <div class="query-content">
+
+      <h4>Business Question</h4>
+      <p>How can we retrieve every employee record?</p>
+
+      <h4>SQL Query</h4>
+
+      <div class="sql-box">
+<pre>SELECT *
+FROM employees;</pre>
+      </div>
+
+      <h4>Explanation</h4>
+      <div class="explanation">
+        SELECT retrieves information.
+        The * symbol represents all columns.
+        FROM specifies which table to read.
+      </div>
+
+      <h4>Expected Result</h4>
+      <p>All five employee records are returned.</p>
+
+    </div>
+  </details>
+
+  <!-- QUERY 2 -->
+  <details class="query-card">
+    <summary>
+      <span class="number">02</span>
+
+      <div class="query-heading">
+        <h3>WHERE — Filter Records</h3>
+        <p>Find employees in the IT department.</p>
+      </div>
+
+      <span class="arrow">⌄</span>
+    </summary>
+
+    <div class="query-content">
+
+      <h4>Business Question</h4>
+      <p>Which employees work in IT?</p>
+
+      <h4>SQL Query</h4>
+
+      <div class="sql-box">
+<pre>SELECT *
+FROM employees
+WHERE department = 'IT';</pre>
+      </div>
+
+      <h4>Explanation</h4>
+      <div class="explanation">
+        WHERE filters records according
+        to a condition. Only employees
+        whose department is IT are returned.
+      </div>
+
+      <h4>Expected Result</h4>
+      <p>Ravi, Arjun and Kiran.</p>
+
+    </div>
+  </details>
+
+  <!-- QUERY 3 -->
+  <details class="query-card">
+    <summary>
+      <span class="number">03</span>
+
+      <div class="query-heading">
+        <h3>DISTINCT — Unique Values</h3>
+        <p>Find all different departments.</p>
+      </div>
+
+      <span class="arrow">⌄</span>
+    </summary>
+
+    <div class="query-content">
+
+      <h4>Business Question</h4>
+      <p>Which departments exist in the company?</p>
+
+      <h4>SQL Query</h4>
+
+      <div class="sql-box">
+<pre>SELECT DISTINCT department
+FROM employees;</pre>
+      </div>
+
+      <h4>Explanation</h4>
+      <div class="explanation">
+        DISTINCT eliminates repeated
+        values from the query result.
+      </div>
+
+      <h4>Expected Result</h4>
+      <p>IT, HR and Finance.</p>
+
+    </div>
+  </details>
+
+  <!-- QUERY 4 -->
+  <details class="query-card">
+    <summary>
+      <span class="number">04</span>
+
+      <div class="query-heading">
+        <h3>ORDER BY — Sort Results</h3>
+        <p>Display salaries from highest to lowest.</p>
+      </div>
+
+      <span class="arrow">⌄</span>
+    </summary>
+
+    <div class="query-content">
+
+      <h4>Business Question</h4>
+      <p>Who earns the highest salary?</p>
+
+      <h4>SQL Query</h4>
+
+      <div class="sql-box">
+<pre>SELECT emp_name, salary
+FROM employees
+ORDER BY salary DESC;</pre>
+      </div>
+
+      <h4>Explanation</h4>
+      <div class="explanation">
+        ORDER BY sorts query results.
+        DESC means descending order,
+        from highest to lowest.
+      </div>
+
+      <h4>Expected Result</h4>
+      <p>
+        Arjun — 75000,
+        Ravi and Kiran — 60000,
+        Sneha — 50000,
+        Priya — 45000.
+      </p>
+
+      <p>
+        Ravi and Kiran have equal salaries,
+        so their relative order is not guaranteed.
+      </p>
+
+    </div>
+  </details>
+
+  <!-- QUERY 5 -->
+  <details class="query-card">
+    <summary>
+      <span class="number">05</span>
+
+      <div class="query-heading">
+        <h3>AND — Multiple Conditions</h3>
+        <p>Find IT employees earning above 60000.</p>
+      </div>
+
+      <span class="arrow">⌄</span>
+    </summary>
+
+    <div class="query-content">
+
+      <h4>Business Question</h4>
+      <p>
+        Which IT employees earn
+        more than ₹60,000?
+      </p>
+
+      <h4>SQL Query</h4>
+
+      <div class="sql-box">
+<pre>SELECT emp_name, salary
+FROM employees
+WHERE department = 'IT'
+AND salary > 60000;</pre>
+      </div>
+
+      <h4>Explanation</h4>
+      <div class="explanation">
+        AND combines multiple conditions.
+        Both conditions must be satisfied.
+      </div>
+
+      <h4>Expected Result</h4>
+      <p>Arjun — 75000.</p>
+
+    </div>
+  </details>
+
+  <!-- QUERY 6 -->
+  <details class="query-card">
+    <summary>
+      <span class="number">06</span>
+
+      <div class="query-heading">
+        <h3>COUNT — Count Records</h3>
+        <p>Find the total number of employees.</p>
+      </div>
+
+      <span class="arrow">⌄</span>
+    </summary>
+
+    <div class="query-content">
+
+      <h4>Business Question</h4>
+      <p>How many employees are in the company?</p>
+
+      <h4>SQL Query</h4>
+
+      <div class="sql-box">
+<pre>SELECT COUNT(*) AS total_employees
+FROM employees;</pre>
+      </div>
+
+      <h4>Explanation</h4>
+      <div class="explanation">
+        COUNT(*) counts the number of rows.
+        AS gives the result column a name.
+      </div>
+
+      <h4>Expected Result</h4>
+      <p>total_employees = 5</p>
+
+    </div>
+  </details>
+
+  <!-- QUERY 7 -->
+  <details class="query-card">
+    <summary>
+      <span class="number">07</span>
+
+      <div class="query-heading">
+        <h3>GROUP BY — Summarize Records</h3>
+        <p>Count employees in each department.</p>
+      </div>
+
+      <span class="arrow">⌄</span>
+    </summary>
+
+    <div class="query-content">
+
+      <h4>Business Question</h4>
+      <p>
+        How many employees work
+        in each department?
+      </p>
+
+      <h4>SQL Query</h4>
+
+      <div class="sql-box">
+<pre>SELECT department,
+       COUNT(*) AS employee_count
+FROM employees
+GROUP BY department;</pre>
+      </div>
+
+      <h4>Explanation</h4>
+      <div class="explanation">
+        GROUP BY groups records based
+        on department. COUNT(*) then
+        counts the rows in each group.
+      </div>
+
+      <h4>Expected Result</h4>
+      <p>IT = 3, HR = 1, Finance = 1.</p>
+
+    </div>
+  </details>
+
+  <!-- QUERY 8 -->
+  <details class="query-card">
+    <summary>
+      <span class="number">08</span>
+
+      <div class="query-heading">
+        <h3>HAVING — Filter Groups</h3>
+        <p>Find departments with more than 2 employees.</p>
+      </div>
+
+      <span class="arrow">⌄</span>
+    </summary>
+
+    <div class="query-content">
+
+      <h4>Business Question</h4>
+      <p>
+        Which departments contain
+        more than two employees?
+      </p>
+
+      <h4>SQL Query</h4>
+
+      <div class="sql-box">
+<pre>SELECT department,
+       COUNT(*) AS employee_count
+FROM employees
+GROUP BY department
+HAVING COUNT(*) > 2;</pre>
+      </div>
+
+      <h4>Explanation</h4>
+      <div class="explanation">
+        HAVING filters groups after
+        GROUP BY has summarized the data.
+      </div>
+
+      <h4>Expected Result</h4>
+      <p>IT — 3 employees.</p>
+
+    </div>
+  </details>
+
+  <!-- QUERY 9 -->
+  <details class="query-card">
+    <summary>
+      <span class="number">09</span>
+
+      <div class="query-heading">
+        <h3>INNER JOIN — Combine Tables</h3>
+        <p>Find each employee's office location.</p>
+      </div>
+
+      <span class="arrow">⌄</span>
+    </summary>
+
+    <div class="query-content">
+
+      <h4>Business Question</h4>
+      <p>
+        How can we display employees
+        with their department locations?
+      </p>
+
+      <h4>Additional Departments Table</h4>
+
+      <div class="table-scroll">
+        <table>
+          <tr>
+            <th>department</th>
+            <th>location</th>
+          </tr>
+          <tr><td>IT</td><td>Hyderabad</td></tr>
+          <tr><td>HR</td><td>Mumbai</td></tr>
+          <tr><td>Finance</td><td>Bengaluru</td></tr>
+        </table>
+      </div>
+
+      <h4>SQL Query</h4>
+
+      <div class="sql-box">
+<pre>SELECT e.emp_name,
+       e.department,
+       d.location
+FROM employees e
+INNER JOIN departments d
+ON e.department = d.department;</pre>
+      </div>
+
+      <h4>Explanation</h4>
+      <div class="explanation">
+        INNER JOIN combines matching
+        records from two tables.
+        Here, department is the
+        common matching column.
+      </div>
+
+      <h4>Expected Result</h4>
+      <p>
+        Ravi — Hyderabad<br>
+        Priya — Mumbai<br>
+        Arjun — Hyderabad<br>
+        Sneha — Bengaluru<br>
+        Kiran — Hyderabad
+      </p>
+
+      <div class="note">
+        This query requires an additional
+        departments table. It is a learning
+        example and is not yet supported
+        by the existing five free SQL labs.
+      </div>
+
+    </div>
+  </details>
+
+  <!-- QUERY 10 -->
+  <details class="query-card">
+    <summary>
+      <span class="number">10</span>
+
+      <div class="query-heading">
+        <h3>Subquery — Second-Highest Salary</h3>
+        <p>Find the second-highest distinct salary.</p>
+      </div>
+
+      <span class="arrow">⌄</span>
+    </summary>
+
+    <div class="query-content">
+
+      <h4>Business Question</h4>
+      <p>
+        What is the second-highest
+        distinct salary in the company?
+      </p>
+
+      <h4>SQL Query</h4>
+
+      <div class="sql-box">
+<pre>SELECT MAX(salary) AS second_highest_salary
+FROM employees
+WHERE salary < (
+    SELECT MAX(salary)
+    FROM employees
+);</pre>
+      </div>
+
+      <h4>Explanation</h4>
+      <div class="explanation">
+        The inner query finds the
+        highest salary.
+
+        The outer query finds the
+        maximum salary below it.
+      </div>
+
+      <h4>Expected Result</h4>
+      <p>second_highest_salary = 60000</p>
+
+    </div>
+  </details>
+
+  <!-- COMPLETE -->
+  <section class="takeaway">
+
+    <h2>You've Explored 10 SQL Queries!</h2>
+
+    <p>
+      You have learned how SQL can
+      retrieve, filter, sort, group
+      and combine information.
+    </p>
+
+    <p>
+      The next step is to practise
+      writing these queries yourself.
+    </p>
+
+    <a class="button" href="./lab.html">
+      Start 5 Free Interactive SQL Labs →
+    </a>
+
+  </section>
+
+  <!-- NAVIGATION -->
+  <section class="card">
+
+    <span class="label">CONTINUE LEARNING</span>
+
+    <h2>Continue Your SQL Learning Journey</h2>
+
+    <a class="button" href="./index.html">
+      ← Back to Homepage
+    </a>
+
+    <a class="button" href="./lab.html">
+      Practice SQL Queries →
+    </a>
+
+  </section>
+
+</main>
+
+<footer>
+  <strong>QueryQuest</strong>
+  <p>Learn SQL. Practice Queries. Master Interviews.</p>
+</footer>
+
+</body>
+</html>
