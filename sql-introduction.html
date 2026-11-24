@@ -8,25 +8,33 @@
 <title>What Is SQL? | QueryQuest</title>
 
 <style>
+:root {
+  --navy: #10263a;
+  --teal: #098b7c;
+  --cream: #faf5e9;
+  --text: #203447;
+  --muted: #607183;
+  --border: #e9e0d2;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  background: #f8f3e9;
-  color: #1b3040;
+  background: var(--cream);
+  color: var(--text);
   font-family: "Segoe UI", Arial, sans-serif;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 header {
-  background: #10263a;
-  color: white;
-  padding: 18px 6%;
+  background: var(--navy);
+  padding: 17px 6%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
 }
@@ -39,206 +47,352 @@ header {
 }
 
 .logo span {
-  color: #58dfbf;
+  color: #54e0bd;
 }
 
-header a.back {
-  color: #d8e7e3;
+.back-link {
+  color: #dcefe9;
   text-decoration: none;
   font-size: 14px;
 }
 
 .hero {
+  background: linear-gradient(120deg, #10263a, #146b68);
   text-align: center;
-  background: linear-gradient(120deg, #10263a, #176b69);
+  padding: 55px 20px;
   color: white;
-  padding: 45px 20px;
-}
-
-.hero h1 {
-  font-size: clamp(34px, 5vw, 50px);
-  margin: 12px 0;
-}
-
-.hero p {
-  max-width: 720px;
-  margin: auto;
-  color: #e0efed;
-  font-size: 17px;
 }
 
 .eyebrow {
-  color: #78eed3;
-  letter-spacing: 2px;
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #7af1d2;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  font-size: clamp(34px, 5vw, 52px);
+  margin: 12px 0;
+  line-height: 1.2;
+}
+
+.hero p {
+  font-size: 17px;
+  color: #e1efec;
+  max-width: 730px;
+  margin: auto;
 }
 
 main {
-  max-width: 1080px;
+  max-width: 1120px;
   margin: auto;
-  padding: 35px 20px 70px;
+  padding: 36px 20px 70px;
 }
 
-.vintage-image {
+/* Vintage image */
+.vintage-picture {
+  margin: 0 0 32px;
   background: white;
   padding: 10px;
+  border: 1px solid var(--border);
   border-radius: 18px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-  margin: 0 0 35px;
+  box-shadow: 0 10px 35px rgba(27, 45, 55, 0.12);
 }
 
-.vintage-image img {
+.vintage-picture img {
   display: block;
   width: 100%;
   height: auto;
   border-radius: 12px;
 }
 
-.vintage-image figcaption {
-  padding: 12px;
-  color: #677788;
-  font-size: 13px;
+figcaption {
   text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 12px 8px 4px;
 }
 
+/* Content cards */
 .card {
   background: white;
-  padding: 30px;
-  margin: 22px 0;
-  border-radius: 16px;
-  border: 1px solid #e8e0d2;
-  box-shadow: 0 5px 18px rgba(0,0,0,0.04);
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  padding: 32px;
+  margin: 23px 0;
+  box-shadow: 0 5px 22px rgba(20, 35, 45, 0.04);
 }
 
 .card h2 {
-  font-size: 27px;
   color: #123d46;
-  margin-top: 0;
+  font-size: 27px;
+  margin: 12px 0 18px;
+  line-height: 1.3;
+}
+
+.card h3 {
+  color: #294758;
+  margin-top: 25px;
 }
 
 .card p {
-  color: #526577;
+  color: #536679;
+  margin-bottom: 18px;
 }
 
-.pill {
+.label {
   display: inline-block;
-  padding: 5px 12px;
-  background: #e4f7f0;
-  color: #087a68;
-  font-size: 12px;
-  font-weight: bold;
+  background: #e2f6ee;
+  color: #087763;
   border-radius: 30px;
+  padding: 6px 14px;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 0.5px;
 }
 
-.table-container {
+.intro-quote {
+  background: #eff8f5;
+  border-left: 4px solid var(--teal);
+  padding: 19px 22px;
+  border-radius: 10px;
+  font-weight: 600;
+  color: #1b6257;
+  margin-top: 24px;
+}
+
+/* Five SQL Capabilities */
+.capabilities {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 13px;
+  margin: 27px 0;
+}
+
+.capability {
+  background: #f5f7f8;
+  border: 1px solid #e4e9ed;
+  border-radius: 14px;
+  padding: 20px 12px;
+  text-align: center;
+}
+
+.capability svg {
+  width: 34px;
+  height: 34px;
+  margin: 0 auto 12px;
+  display: block;
+  stroke: #526778;
+  stroke-width: 1.8;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.capability strong {
+  display: block;
+  font-size: 15px;
+  color: #213a4c;
+}
+
+.capability small {
+  color: #6b7986;
+  font-size: 12px;
+}
+
+.capability-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.detail {
+  padding: 18px;
+  background: #fcfbf8;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.detail h3 {
+  font-size: 17px;
+  margin: 0 0 8px;
+  color: #143f47;
+}
+
+.detail p {
+  font-size: 14px;
+  margin: 0;
+}
+
+.detail:last-child {
+  grid-column: 1 / -1;
+}
+
+/* Database comparison */
+.comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin: 25px 0;
+}
+
+.comparison-box {
+  padding: 23px;
+  background: #f0f8f6;
+  border: 1px solid #d5e8e2;
+  border-radius: 14px;
+  text-align: center;
+}
+
+.comparison-box .symbol {
+  font-size: 34px;
+}
+
+.comparison-box h3 {
+  margin: 10px 0;
+  color: #10685f;
+}
+
+.comparison-box p {
+  margin: 0;
+}
+
+.table-scroll {
   overflow-x: auto;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 20px 0;
+  margin-top: 18px;
 }
 
 th, td {
-  border: 1px solid #dce5e7;
-  padding: 13px;
+  padding: 14px;
+  border: 1px solid #dbe4e5;
   text-align: left;
 }
 
 th {
-  background: #e5f4ef;
+  background: #e6f3ef;
+  color: #174f48;
 }
 
-pre {
-  background: #11293e;
-  color: #d6fff3;
-  border-radius: 12px;
-  padding: 22px;
-  overflow-x: auto;
-  font: 15px/1.7 Consolas, monospace;
-}
-
+/* SQL history */
 .timeline {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 18px;
-  margin-top: 22px;
+  position: relative;
+  padding-left: 30px;
+  margin-top: 30px;
+  border-left: 3px solid #c5e8df;
 }
 
-.event {
-  padding: 20px;
-  background: #f4f7f3;
-  border-left: 4px solid #0c9882;
-  border-radius: 12px;
+.timeline-item {
+  position: relative;
+  background: #fbfaf6;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 22px;
+  margin-bottom: 19px;
 }
 
-.event strong {
-  font-size: 24px;
-  color: #09816f;
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -40px;
+  top: 28px;
+  width: 15px;
+  height: 15px;
+  background: var(--teal);
+  border: 4px solid #def6ef;
+  border-radius: 50%;
 }
 
-.event h3 {
-  margin: 6px 0;
+.year {
+  color: #0b8d7c;
+  font-size: 22px;
+  font-weight: 800;
 }
 
-.event p {
-  margin-bottom: 0;
+.timeline-item h3 {
+  margin: 7px 0 9px;
+  color: #213f4b;
 }
 
+.timeline-item p {
+  margin: 0;
+}
+
+/* Final summary */
 .takeaway {
-  background: #116b61;
+  background: linear-gradient(120deg, #075d58, #118577);
+  border-radius: 16px;
+  padding: 30px;
   color: white;
-  padding: 25px;
-  border-radius: 15px;
-  margin: 25px 0;
+  margin-top: 28px;
+}
+
+.takeaway h2 {
+  margin-top: 0;
 }
 
 .takeaway p {
-  margin-bottom: 0;
+  color: #e5f6f2;
 }
 
+/* Navigation */
 .button {
   display: inline-block;
-  background: #0b907d;
+  background: #098d7c;
   color: white;
-  padding: 13px 20px;
+  font-weight: 700;
   text-decoration: none;
+  padding: 13px 21px;
   border-radius: 9px;
-  font-weight: bold;
   margin: 8px 8px 0 0;
 }
 
 .button:hover {
-  background: #087260;
+  background: #087364;
 }
 
-button:disabled {
-  background: #a7b1b7;
-  color: white;
-  border: none;
+.button-disabled {
+  background: #e5e9eb;
+  color: #607180;
   cursor: not-allowed;
 }
 
 footer {
-  background: #10263a;
+  background: var(--navy);
+  color: #dcece8;
   text-align: center;
-  color: white;
   padding: 25px;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 750px) {
+  .capabilities {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .capability-details,
+  .comparison {
+    grid-template-columns: 1fr;
+  }
+
+  .detail:last-child {
+    grid-column: auto;
+  }
+
+  .card {
+    padding: 22px;
+  }
+
   main {
     padding: 22px 13px 45px;
   }
 
-  .card {
-    padding: 20px;
-  }
-
-  .timeline {
-    grid-template-columns: 1fr;
+  .hero {
+    padding: 42px 18px;
   }
 }
 </style>
@@ -247,209 +401,455 @@ footer {
 <body>
 
 <header>
-  <a class="logo" href="./index.html">
+  <a href="./index.html" class="logo">
     Query<span>Quest</span>
   </a>
 
-  <a class="back" href="./index.html">
+  <a href="./index.html" class="back-link">
     ← Back to Homepage
   </a>
 </header>
 
+<!-- PAGE TITLE -->
 <section class="hero">
-
   <div class="eyebrow">
-    SQL INTRODUCTION — PAGE 1 OF 4
+    SQL Introduction · Page 1 of 4
   </div>
 
   <h1>What Is SQL?</h1>
 
   <p>
-    Discover the language behind modern databases
-    and explore its journey from the 1970s
-    to today's data-driven world.
+    The story behind Structured Query Language
+    and its evolution from the 1970s to today.
   </p>
-
 </section>
 
 <main>
 
   <!-- VINTAGE PICTURE -->
-  <figure class="vintage-image">
-
-    <a href="./queryquest-page1-vintage.png"
-       target="_blank"
-       rel="noopener noreferrer">
-
-      <img
-        src="./queryquest-page1-vintage.png"
-        alt="Vintage illustration of SQL concepts,
-        early computers, relational databases
-        and the history of computing">
-
-    </a>
+  <figure class="vintage-picture">
+    <img
+      src="./queryquest-page1-vintage.png"
+      alt="Vintage illustration showing the evolution
+      of SQL and relational database technology">
 
     <figcaption>
-      From early computing systems to modern SQL databases.
-      Click the picture to view it in full size.
+      The evolution of databases:
+      from early computing to modern data systems.
     </figcaption>
-
   </figure>
 
-  <!-- SECTION 1 -->
-  <article class="card">
+  <!-- WHAT IS SQL -->
+  <section class="card">
+    <span class="label">SQL INTRODUCTION</span>
 
-  <span class="pill">SQL INTRODUCTION</span>
-
-  <h2>1. What Is SQL?</h2>
-
-  <p>
-    SQL stands for
-    <strong>Structured Query Language.</strong>
-  </p>
-
-  <p>
-    SQL is a standard language used to
-    communicate with relational databases.
-    It allows users to access, manage
-    and organize structured data.
-  </p>
-
-  <p>
-    SQL provides commands to retrieve,
-    insert, update and delete information.
-    It also helps analyze and summarize data.
-  </p>
-
-  <p>
-    <strong>In simple words:</strong>
-    SQL is a language that helps us
-    communicate with databases and
-    work with stored information.
-  </p>
-
-  </article>
-
-  <!-- SECTION 2 -->
-  
-
-  <!-- SECTION 3 -->
-  <article class="card">
-
-    <span class="pill">THE HISTORY OF SQL</span>
-
-    <h2>2. How SQL Started — 1970 to Today</h2>
+    <h2>1. What Is SQL?</h2>
 
     <p>
-      SQL did not appear overnight.
-      Its development began with research
-      into organizing and retrieving data.
+      SQL stands for
+      <strong>Structured Query Language.</strong>
     </p>
 
-    <div class="timeline">
+    <p>
+      SQL is a standardized language used to
+      communicate with relational databases.
+      It enables users to access, manage,
+      organize and analyze structured information.
+    </p>
 
-      <div class="event">
-        <strong>1970</strong>
-        <h3>Relational Database Model</h3>
+    <p>
+      SQL has become one of the fundamental
+      technologies used in database management,
+      software applications and data analytics.
+    </p>
+
+    <h3>Introduction — Why Do We Need SQL?</h3>
+
+    <p>
+      Every day, organizations generate enormous
+      amounts of information. Storing that
+      information is only the beginning.
+      The real challenge is finding the right
+      information and using it effectively.
+    </p>
+
+    <p>
+      This is where SQL comes in.
+    </p>
+
+    <p>
+      Imagine a database as a large digital
+      library containing thousands of
+      organized records.
+    </p>
+
+    <p>
+      SQL is the language that allows us to
+      communicate with that library, search
+      for information and perform operations
+      on stored data.
+    </p>
+
+    <p>
+      Instead of manually searching through
+      records, SQL provides a structured and
+      efficient way to work with information.
+    </p>
+
+    <div class="intro-quote">
+      SQL helps us communicate with databases
+      and turn stored information into useful answers.
+    </div>
+  </section>
+
+  <!-- FIVE SQL CAPABILITIES -->
+  <section class="card">
+    <span class="label">SQL FUNDAMENTALS</span>
+
+    <h2>2. Five SQL Capabilities</h2>
+
+    <p>
+      SQL supports five important operations
+      that help users work with information.
+    </p>
+
+    <!-- Five icons -->
+    <div class="capabilities">
+
+      <div class="capability">
+        <svg viewBox="0 0 24 24">
+          <circle cx="10.5" cy="10.5" r="6.5"/>
+          <path d="m16 16 5 5"/>
+        </svg>
+        <strong>Retrieve</strong>
+        <small>Find information</small>
+      </div>
+
+      <div class="capability">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 7v10M7 12h10"/>
+        </svg>
+        <strong>Insert</strong>
+        <small>Add information</small>
+      </div>
+
+      <div class="capability">
+        <svg viewBox="0 0 24 24">
+          <path d="M4 20l4-.8L20 7.2 16.8 4 4.8 16z"/>
+          <path d="m14.8 6 3.2 3.2"/>
+        </svg>
+        <strong>Update</strong>
+        <small>Modify records</small>
+      </div>
+
+      <div class="capability">
+        <svg viewBox="0 0 24 24">
+          <path d="M4 7h16M9 7V4h6v3"/>
+          <path d="M6.5 7l1 13h9l1-13"/>
+          <path d="M10 11v6M14 11v6"/>
+        </svg>
+        <strong>Delete</strong>
+        <small>Remove records</small>
+      </div>
+
+      <div class="capability">
+        <svg viewBox="0 0 24 24">
+          <path d="M4 20V13M9 20V9M14 20V4M19 20V11"/>
+        </svg>
+        <strong>Analyze</strong>
+        <small>Discover insights</small>
+      </div>
+
+    </div>
+
+    <!-- Capability explanations -->
+    <div class="capability-details">
+
+      <div class="detail">
+        <h3>Retrieve — Find Information</h3>
         <p>
-          IBM researcher Edgar F. Codd
-          published his relational database model,
-          laying the foundation for relational
-          data management.
+          SQL allows users to search for and
+          retrieve specific information stored
+          in a database. This helps access
+          the required records without manually
+          examining the entire dataset.
         </p>
       </div>
 
-      <div class="event">
-        <strong>1974</strong>
-        <h3>Development of SEQUEL</h3>
+      <div class="detail">
+        <h3>Insert — Add New Information</h3>
         <p>
-          IBM researchers Donald D. Chamberlin
-          and Raymond F. Boyce developed SEQUEL,
-          the language that evolved into SQL.
+          SQL enables users to add new records
+          to existing database tables, helping
+          organizations maintain and expand
+          their stored information.
         </p>
       </div>
 
-      <div class="event">
-        <strong>1970s</strong>
-        <h3>IBM System R</h3>
+      <div class="detail">
+        <h3>Update — Modify Existing Information</h3>
         <p>
-          IBM's System R research project
-          helped demonstrate the practical use
-          of relational database technology.
+          SQL allows existing information
+          to be changed or corrected while
+          maintaining records in the database.
         </p>
       </div>
 
-      <div class="event">
-        <strong>1986–1987</strong>
-        <h3>SQL Standardization</h3>
+      <div class="detail">
+        <h3>Delete — Remove Information</h3>
         <p>
-          SQL became an ANSI standard in 1986
-          and an ISO standard in 1987.
+          SQL provides commands to remove
+          unwanted or outdated records from
+          database tables when appropriate.
         </p>
       </div>
 
-      <div class="event">
-        <strong>1990s–2000s</strong>
-        <h3>Wider Adoption</h3>
+      <div class="detail">
+        <h3>Analyze — Discover Meaningful Insights</h3>
         <p>
-          Relational database technology spread
-          across enterprise applications,
-          websites and business systems.
-        </p>
-      </div>
-
-      <div class="event">
-        <strong>Today</strong>
-        <h3>Modern Data Platforms</h3>
-        <p>
-          SQL is widely used in relational databases,
-          cloud data warehouses, analytics platforms
-          and modern applications.
+          SQL helps summarize, compare, group
+          and calculate information, transforming
+          stored data into useful insights for
+          reporting and decision-making.
         </p>
       </div>
 
     </div>
 
-  </article>
+    <div class="intro-quote">
+      These five capabilities form an important
+      foundation for understanding how SQL
+      works with data.
+    </div>
+
+  </section>
+
+  <!-- SQL VS DATABASE -->
+  <section class="card">
+    <span class="label">UNDERSTANDING DATABASES</span>
+
+    <h2>3. SQL vs. Database — What's the Difference?</h2>
+
+    <p>
+      Although SQL and databases work together,
+      they are not the same thing.
+    </p>
+
+    <div class="comparison">
+
+      <div class="comparison-box">
+        <div class="symbol">🗄️</div>
+        <h3>Database</h3>
+        <p>
+          An organized collection of information.
+          Relational databases store information
+          in tables containing rows and columns.
+        </p>
+      </div>
+
+      <div class="comparison-box">
+        <div class="symbol">⌨️</div>
+        <h3>SQL</h3>
+        <p>
+          The language used to communicate
+          with relational database systems
+          and work with stored information.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Database</th>
+            <th>SQL</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Stores and organizes information</td>
+            <td>Communicates with the database</td>
+          </tr>
+
+          <tr>
+            <td>Contains tables, columns and records</td>
+            <td>Provides statements to work with data</td>
+          </tr>
+
+          <tr>
+            <td>Managed by database software</td>
+            <td>Supported by relational database systems</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      Popular systems supporting SQL include
+      Oracle Database, MySQL, PostgreSQL
+      and Microsoft SQL Server.
+    </p>
+
+    <div class="intro-quote">
+      Remember: A database stores the data.
+      SQL is the language used to communicate
+      with the database.
+    </div>
+
+  </section>
+
+  <!-- HISTORY -->
+  <section class="card">
+    <span class="label">THE EVOLUTION OF SQL</span>
+
+    <h2>4. How SQL Started — 1970 to Today</h2>
+
+    <p>
+      SQL did not appear overnight.
+      It evolved through decades of research
+      and technological development.
+    </p>
+
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <span class="year">1970</span>
+
+        <h3>The Foundation of Relational Databases</h3>
+
+        <p>
+          IBM researcher Edgar F. Codd
+          introduced the relational database model.
+
+          His research established a new approach
+          to organizing and managing structured
+          information using relations.
+        </p>
+      </div>
+
+      <div class="timeline-item">
+        <span class="year">1974</span>
+
+        <h3>The Birth of SEQUEL</h3>
+
+        <p>
+          IBM researchers Donald D. Chamberlin
+          and Raymond F. Boyce developed SEQUEL,
+          a language designed for interacting
+          with relational databases.
+
+          SEQUEL later evolved into SQL.
+        </p>
+      </div>
+
+      <div class="timeline-item">
+        <span class="year">1970s</span>
+
+        <h3>IBM System R</h3>
+
+        <p>
+          IBM's System R research project helped
+          demonstrate how relational database
+          technology and SQL could work in
+          practical computing environments.
+        </p>
+      </div>
+
+      <div class="timeline-item">
+        <span class="year">1986–1987</span>
+
+        <h3>SQL Becomes an International Standard</h3>
+
+        <p>
+          SQL became an ANSI standard in 1986
+          and an ISO standard in 1987.
+
+          These developments helped establish
+          SQL as a standardized language for
+          relational database systems.
+        </p>
+      </div>
+
+      <div class="timeline-item">
+        <span class="year">1990s–2000s</span>
+
+        <h3>Expansion Across Industries</h3>
+
+        <p>
+          SQL became widely adopted in enterprise
+          applications, financial systems,
+          websites and business reporting platforms.
+
+          As database technologies evolved,
+          SQL continued supporting increasingly
+          sophisticated data processing requirements.
+        </p>
+      </div>
+
+      <div class="timeline-item">
+        <span class="year">Today</span>
+
+        <h3>SQL in the Modern Data World</h3>
+
+        <p>
+          SQL remains widely used across relational
+          databases, cloud data warehouses,
+          business intelligence platforms
+          and analytics systems.
+
+          Although technology has changed
+          significantly since the 1970s,
+          SQL continues to play an essential
+          role in how organizations work
+          with structured data.
+        </p>
+      </div>
+
+    </div>
+  </section>
 
   <!-- KEY TAKEAWAY -->
   <section class="takeaway">
 
-    <h2>Key Takeaway</h2>
+    <h2>5. Key Takeaway</h2>
 
     <p>
-      SQL evolved from relational database
-      research into a widely adopted
-      language for managing and analyzing data.
+      SQL began as a research language for
+      relational databases and evolved into
+      a widely adopted standard for working
+      with structured information.
     </p>
 
     <p>
-      Understanding the basics helps you
-      prepare for practical SQL learning
-      and real-world database challenges.
+      By understanding what SQL is, its core
+      capabilities and its history, you have
+      taken your first step toward mastering SQL.
     </p>
 
   </section>
 
   <!-- NAVIGATION -->
   <section class="card">
+    <span class="label">YOUR LEARNING JOURNEY</span>
 
-    <h2>What's Next?</h2>
+    <h2>Continue Learning</h2>
 
     <p>
-      You've completed Page 1 of SQL Introduction.
-      In the next lesson, we'll explore
-      why learning SQL is valuable.
+      You have completed Page 1 of
+      the SQL Introduction.
     </p>
 
     <a href="./index.html" class="button">
-      ← Back to Homepage
+      ← Back to QueryQuest Homepage
     </a>
 
-    <button class="button" disabled>
-      Page 2: Why Learn SQL? — Coming Next
-    </button>
-
+    <span class="button button-disabled">
+      Page 2 — Why Learn SQL? · Coming Soon
+    </span>
   </section>
 
 </main>
