@@ -185,7 +185,7 @@ selectModule(0);boot();
       <div>
         <div class="qq-progress-kicker">YOUR PRACTICE JOURNEY</div>
         <h2>Your Learning Progress</h2>
-        <p>Work through 50 SQL challenges across 10 modules.</p>
+        <p>Try a question to begin. A module is Completed when all five answers are correct.</p>
       </div>
       <div class="qq-progress-count">
         <strong id="qqTotalDone">0 / 50</strong>
@@ -234,17 +234,22 @@ selectModule(0);boot();
 
   function qqModuleStatus(index) {
     const start = index * 5;
-    const solved = completed.slice(start,start+5).filter(Boolean).length;
-    const hasDraft = drafts.slice(start,start+5).some(text => text.trim().length > 0);
-    const state = solved === 5 ? 'Completed' : solved > 0 || hasDraft ? 'Pending' : 'Not Started';
-    return {solved,state};
+    const solved = completed.slice(start, start + 5).filter(Boolean).length;
+    const started = Array.from({length: 5}, (_, question) => {
+      const pos = start + question;
+      return completed[pos] || (typeof drafts[pos] === 'string' && drafts[pos].trim() !== '');
+    }).filter(Boolean).length;
+    const state = solved === 5 ? 'Completed' : started > 0 ? 'Pending' : 'Not Started';
+    return {solved, started, state};
   }
 
   function qqRender() {
     const total = completed.filter(Boolean).length;
     const completedModules = modules.filter((_,i) => qqModuleStatus(i).solved === 5).length;
     document.getElementById('qqTotalDone').textContent = total + ' / 50';
-    document.getElementById('qqModulesDone').textContent = completedModules + ' of 10 modules completed';
+    const labsStarted = modules.reduce((sum, _, i) => sum + qqModuleStatus(i).started, 0);
+    document.getElementById('qqModulesDone').textContent =
+      completedModules + ' of 10 modules completed · ' + labsStarted + ' of 50 started';
     document.getElementById('qqPercent').textContent = (total * 2) + '% complete';
     document.getElementById('qqBarInner').style.width = (total * 2) + '%';
     document.getElementById('qqBarOuter').setAttribute('aria-valuenow',String(total));
@@ -254,12 +259,13 @@ selectModule(0);boot();
     const list = document.getElementById('qqModuleList');
     list.replaceChildren();
     modules.forEach((mod,i) => {
-      const {solved,state} = qqModuleStatus(i);
+      const {solved,started,state} = qqModuleStatus(i);
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'qq-module-button' + (i===activeModule?' active':'');
       btn.setAttribute('aria-current',i===activeModule?'step':'false');
-      btn.setAttribute('aria-label',`Module ${i+1}: ${mod.name}, ${state}, ${solved} of 5 completed`);
+      btn.setAttribute('aria-label',
+        `Module ${i+1}: ${mod.name}, ${state}, ${started} of 5 started, ${solved} of 5 completed`);
 
       const line = document.createElement('div');
       line.className = 'qq-module-titleline';
@@ -277,7 +283,7 @@ selectModule(0);boot();
       status.className = 'qq-status ' + (state==='Pending'?'pending':state==='Completed'?'completed':'');
       status.textContent = state;
       const count = document.createElement('small');
-      count.textContent = solved + '/5 done';
+      count.textContent = solved > 0 ? solved + '/5 done' : started + '/5 started';
       bottom.append(status,count);
       const subbar = document.createElement('div');
       subbar.className = 'qq-subbar';
