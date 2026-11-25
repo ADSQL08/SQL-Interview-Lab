@@ -1,0 +1,2031 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>50 SQL Learning Queries | QueryQuest</title>
+
+<style>
+:root {
+  --navy:#10263a;
+  --teal:#087f73;
+  --paper:#f7f6f2;
+  --white:#fff;
+  --text:#213541;
+  --muted:#687a83;
+  --line:#dfe7e4;
+}
+
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  background:var(--paper);
+  color:var(--text);
+  font-family:"Segoe UI",Arial,sans-serif;
+  line-height:1.65;
+}
+
+button { font:inherit; cursor:pointer; }
+a { text-decoration:none; }
+
+[hidden] { display:none!important; }
+
+header {
+  background:var(--navy);
+  padding:17px 5%;
+}
+
+.topbar {
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.brand {
+  color:white;
+  font-size:26px;
+  font-weight:800;
+}
+
+.brand span { color:#59dfc1; }
+
+.home-link {
+  color:#dcebe8;
+  font-size:14px;
+}
+
+.hero {
+  background:linear-gradient(115deg,#10263a,#176764);
+  padding:53px 20px;
+  color:white;
+}
+
+.hero-inner {
+  max-width:1200px;
+  margin:auto;
+}
+
+.eyebrow {
+  color:#8ce6d1;
+  font-weight:800;
+  font-size:12px;
+  letter-spacing:2px;
+}
+
+.hero h1 {
+  font-size:clamp(34px,5vw,52px);
+  letter-spacing:-1.3px;
+  line-height:1.18;
+  margin:15px 0;
+}
+
+.hero p {
+  color:#d9ede8;
+  max-width:730px;
+  font-size:16px;
+}
+
+.hero-meta {
+  display:flex;
+  flex-wrap:wrap;
+  gap:18px;
+  margin-top:22px;
+  color:#e1f1ed;
+  font-size:13px;
+}
+
+main {
+  max-width:1200px;
+  margin:auto;
+  padding:30px 18px 70px;
+}
+
+.progress-card {
+  background:white;
+  border:1px solid var(--line);
+  padding:20px 25px;
+  border-radius:13px;
+  margin-bottom:22px;
+}
+
+.progress-info {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.progress-info strong { font-size:14px; }
+
+.progress-info span {
+  font-size:13px;
+  color:var(--muted);
+}
+
+.track {
+  height:7px;
+  background:#e6efea;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+#progressFill {
+  height:100%;
+  width:0;
+  background:var(--teal);
+  transition:width .25s;
+}
+
+.layout {
+  display:grid;
+  grid-template-columns:295px minmax(0,1fr);
+  gap:20px;
+  align-items:start;
+}
+
+.panel {
+  background:white;
+  border:1px solid var(--line);
+  border-radius:14px;
+  overflow:hidden;
+  margin-bottom:20px;
+}
+
+.panel-pad { padding:25px; }
+
+.sidebar {
+  position:sticky;
+  top:15px;
+}
+
+.sidebar-title {
+  padding:21px;
+  border-bottom:1px solid var(--line);
+}
+
+.sidebar-title strong {
+  font-size:17px;
+}
+
+.sidebar-title p {
+  color:var(--muted);
+  font-size:13px;
+  margin:5px 0 0;
+}
+
+.module-button {
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:15px;
+  border:0;
+  border-bottom:1px solid #edf1ef;
+  background:white;
+  text-align:left;
+}
+
+.module-button:hover {
+  background:#f7faf8;
+}
+
+.module-button.active {
+  background:#e9f5f0;
+  box-shadow:inset 4px 0 var(--teal);
+}
+
+.module-number {
+  width:29px;
+  flex-shrink:0;
+  color:#78908d;
+  font-size:14px;
+  font-weight:800;
+}
+
+.module-text { flex:1; }
+
+.module-text strong {
+  display:block;
+  font-size:13px;
+  line-height:1.4;
+}
+
+.module-text small {
+  display:block;
+  color:var(--muted);
+  margin-top:4px;
+  font-size:11px;
+}
+
+.kicker {
+  color:var(--teal);
+  font-size:11px;
+  letter-spacing:1.3px;
+  font-weight:800;
+  text-transform:uppercase;
+}
+
+.module-header h2 {
+  margin:10px 0;
+  font-size:30px;
+  letter-spacing:-.6px;
+  line-height:1.25;
+}
+
+.description {
+  color:var(--muted);
+  font-size:14px;
+  margin:9px 0;
+}
+
+.focus {
+  font-size:12px;
+  color:#1c6c60;
+  background:#edf7f2;
+  display:inline-block;
+  padding:7px 12px;
+  border-radius:30px;
+  margin-top:13px;
+}
+
+.section-heading {
+  font-size:20px;
+  margin:0 0 15px;
+}
+
+.question-list {
+  border:1px solid var(--line);
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.question-button {
+  width:100%;
+  display:flex;
+  align-items:center;
+  text-align:left;
+  gap:13px;
+  padding:16px;
+  background:white;
+  color:var(--text);
+  border:0;
+  border-bottom:1px solid var(--line);
+}
+
+.question-button:last-child {
+  border-bottom:0;
+}
+
+.question-button.active {
+  background:#e9f5f0;
+}
+
+.question-button:hover {
+  background:#f4faf6;
+}
+
+.question-no {
+  min-width:28px;
+  color:#7d9392;
+  font-weight:800;
+  font-size:13px;
+}
+
+.question-name {
+  flex:1;
+  font-weight:600;
+  font-size:14px;
+}
+
+.question-status {
+  font-size:12px;
+  color:#16856e;
+  white-space:nowrap;
+}
+
+/* DATABASE EXPLORER */
+
+.db-tabs {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:17px 0;
+}
+
+.db-tab {
+  border:1px solid #d4e4dc;
+  border-radius:7px;
+  background:#f5f8f6;
+  color:#30685d;
+  padding:9px 12px;
+  font-size:12px;
+  font-weight:600;
+}
+
+.db-tab.active {
+  color:white;
+  background:var(--teal);
+  border-color:var(--teal);
+}
+
+.table-frame {
+  border:1px solid var(--line);
+  border-radius:9px;
+  overflow:hidden;
+}
+
+.table-label {
+  padding:10px 13px;
+  background:#f4f7f5;
+  border-bottom:1px solid var(--line);
+  color:#576d6a;
+  font-size:12px;
+}
+
+.table-scroll {
+  overflow-x:auto;
+  max-height:270px;
+}
+
+table {
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px;
+}
+
+th,td {
+  padding:11px;
+  text-align:left;
+  border-bottom:1px solid #eaf0ed;
+  white-space:nowrap;
+}
+
+th {
+  background:#f8faf9;
+  color:#28554c;
+}
+
+tr:last-child td { border-bottom:0; }
+
+/* LEARNING ARTICLE */
+
+.lesson-meta {
+  color:var(--teal);
+  text-transform:uppercase;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:1.2px;
+}
+
+.lesson-title {
+  font-size:29px;
+  letter-spacing:-.6px;
+  line-height:1.2;
+  margin:13px 0 18px;
+}
+
+.task {
+  background:#f4f8f5;
+  border:1px solid #e0ebe4;
+  border-radius:10px;
+  padding:20px;
+  margin:23px 0;
+}
+
+.task strong { font-size:14px; }
+
+.task p {
+  margin:8px 0 0;
+  font-size:15px;
+}
+
+.sql-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin:20px 0 10px;
+}
+
+.sql-header h3 { margin:0; font-size:17px; }
+
+.code-box {
+  border-radius:11px;
+  overflow:hidden;
+  background:#10263a;
+}
+
+.code-label {
+  padding:10px 16px;
+  background:#1b3648;
+  color:#aac8c4;
+  font-size:12px;
+}
+
+.code-box pre {
+  color:#d7fff0;
+  font:14px/1.8 Consolas,"Courier New",monospace;
+  white-space:pre;
+  overflow-x:auto;
+  margin:0;
+  padding:19px;
+}
+
+.explanation {
+  border-left:3px solid var(--teal);
+  margin:23px 0;
+  padding:4px 0 4px 17px;
+}
+
+.explanation strong { font-size:15px; }
+
+.explanation p {
+  font-size:14px;
+  color:#556d6a;
+  margin:8px 0 0;
+}
+
+.actions {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:20px 0;
+}
+
+.btn {
+  display:inline-block;
+  padding:11px 17px;
+  border:1px solid var(--teal);
+  border-radius:8px;
+  background:var(--teal);
+  color:white;
+  font-size:13px;
+  font-weight:700;
+}
+
+.btn.secondary {
+  background:white;
+  color:#1e6d61;
+  border-color:#c9dfd6;
+}
+
+.btn:disabled {
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+#resultSection {
+  display:none;
+  margin-top:25px;
+  border-top:1px solid var(--line);
+  padding-top:23px;
+}
+
+#resultSection h3 {
+  margin:0 0 15px;
+  font-size:19px;
+}
+
+#resultMessage {
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:12px;
+}
+
+.lesson-footer {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:10px;
+  border-top:1px solid var(--line);
+  margin-top:28px;
+  padding-top:21px;
+}
+
+.note {
+  background:#f4f7f6;
+  border-radius:10px;
+  padding:20px;
+  color:#536965;
+  font-size:13px;
+  margin-top:25px;
+}
+
+footer {
+  background:var(--navy);
+  color:#d5e7e2;
+  padding:27px;
+  text-align:center;
+  font-size:13px;
+}
+
+@media(max-width:850px) {
+  .layout { grid-template-columns:1fr; }
+  .sidebar { position:static; }
+  .module-header h2 { font-size:26px; }
+}
+
+@media(max-width:550px) {
+  .hero { padding:40px 18px; }
+  main { padding:18px 12px 45px; }
+  .panel-pad { padding:19px; }
+  .lesson-title { font-size:24px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="topbar">
+    <a class="brand" href="./index.html">
+      Query<span>Quest</span>
+    </a>
+
+    <a class="home-link" href="./index.html">
+      Back to Homepage
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">
+      QueryQuest / SQL Learning Collection
+    </div>
+
+    <h1>50 SQL Learning Queries</h1>
+
+    <p>
+      Learn how SQL works through guided examples,
+      clear explanations and real database results.
+      Build your knowledge one query at a time.
+    </p>
+
+    <div class="hero-meta">
+      <span>10 modules</span>
+      <span>50 guided SQL queries</span>
+      <span>₹499/month · Planned subscription</span>
+    </div>
+  </div>
+</section>
+
+<main>
+
+  <div class="progress-card">
+    <div class="progress-info">
+      <strong>Your Learning Progress</strong>
+      <span id="progressText">0 of 50 reviewed</span>
+    </div>
+
+    <div class="track">
+      <div id="progressFill"></div>
+    </div>
+  </div>
+
+  <div class="layout">
+
+    <!-- 10 MODULES -->
+    <aside class="panel sidebar">
+      <div class="sidebar-title">
+        <strong>Course Modules</strong>
+        <p>Select a module to explore its queries.</p>
+      </div>
+
+      <div id="moduleNav"></div>
+    </aside>
+
+    <div>
+
+      <!-- MODULE INTRODUCTION -->
+      <section class="panel panel-pad module-header">
+        <div class="kicker" id="moduleNumber">
+          MODULE 01
+        </div>
+
+        <h2 id="moduleTitle"></h2>
+        <p class="description" id="moduleDescription"></p>
+        <span class="focus" id="moduleFocus"></span>
+      </section>
+
+      <!-- FIVE QUESTIONS -->
+      <section class="panel panel-pad">
+        <h2 class="section-heading">Learning Queries</h2>
+
+        <p class="description">
+          Select any query to learn the concept,
+          understand the SQL statement and
+          view its results.
+        </p>
+
+        <div class="question-list" id="questionNav"></div>
+      </section>
+
+      <!-- DATA EXPLORER -->
+      <section class="panel panel-pad">
+        <div class="kicker">Sample Data</div>
+        <h2 class="section-heading"
+            style="margin-top:10px">
+          ShopSmart Database
+        </h2>
+
+        <p class="description">
+          Explore the tables used in the examples.
+          The records are fictional.
+        </p>
+
+        <div class="db-tabs">
+          <button class="db-tab active" data-db="products">
+            products
+          </button>
+          <button class="db-tab" data-db="customers">
+            customers
+          </button>
+          <button class="db-tab" data-db="orders">
+            orders
+          </button>
+          <button class="db-tab" data-db="order_items">
+            order_items
+          </button>
+        </div>
+
+        <div class="table-frame">
+          <div class="table-label" id="dbLabel">
+            products
+          </div>
+          <div class="table-scroll" id="dbTable">
+            Loading database...
+          </div>
+        </div>
+      </section>
+
+      <!-- SELECTED LEARNING QUERY -->
+      <article class="panel panel-pad" id="lesson">
+
+        <div class="lesson-meta" id="lessonNumber"></div>
+
+        <h2 class="lesson-title" id="lessonTitle"></h2>
+
+        <p class="description" id="lessonIntroduction"></p>
+
+        <div class="task">
+          <strong>Business Question</strong>
+          <p id="lessonTask"></p>
+        </div>
+
+        <div class="sql-header">
+          <h3>SQL Query</h3>
+          <button class="btn secondary" id="copyButton">
+            Copy SQL
+          </button>
+        </div>
+
+        <div class="code-box">
+          <div class="code-label">example.sql</div>
+          <pre id="sqlCode"></pre>
+        </div>
+
+        <div class="explanation">
+          <strong>Understanding the Query</strong>
+          <p id="lessonExplanation"></p>
+        </div>
+
+        <div class="actions">
+          <button class="btn" id="runButton" disabled>
+            Run Example
+          </button>
+
+          <button class="btn secondary" id="reviewButton">
+            Mark as Reviewed
+          </button>
+        </div>
+
+        <div id="resultSection">
+          <h3>Query Results</h3>
+
+          <p id="resultMessage"></p>
+
+          <div class="table-frame">
+            <div class="table-scroll" id="queryOutput"></div>
+          </div>
+        </div>
+
+        <div class="lesson-footer">
+          <span class="description" id="lessonPosition"></span>
+
+          <button class="btn" id="nextButton">
+            Next Query
+          </button>
+        </div>
+
+      </article>
+
+      <div class="note">
+        These are guided learning examples, not
+        graded practice labs. You can read the SQL,
+        understand the explanation and run each
+        example to see the actual database result.
+      </div>
+
+      <div style="text-align:center;margin:30px 0">
+        <a class="btn secondary" href="./index.html">
+          Back to Homepage
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <strong>QueryQuest</strong>
+  <p>Learn SQL. Practice Queries. Master Interviews.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/sql-wasm.js"></script>
+
+<script>
+
+// 10 MODULES, EACH CONTAINING 5 GUIDED QUERIES
+
+const modules = [
+
+  {
+    name:"Your First SQL Queries",
+    description:
+      "Discover how to retrieve information from " +
+      "database tables and filter records.",
+    focus:"SELECT · FROM · WHERE · DISTINCT",
+    lessons:[
+      {
+        title:"Display All Products",
+        task:"Display every product in ShopSmart.",
+        sql:`SELECT *
+FROM products;`,
+        why:"SELECT retrieves information. The asterisk (*) " +
+            "means all columns. FROM identifies the source table."
+      },
+      {
+        title:"Product Names and Prices",
+        task:"Display only product names and their prices.",
+        sql:`SELECT product_name, price
+FROM products;`,
+        why:"Specify individual column names after SELECT " +
+            "when you only need certain fields."
+      },
+      {
+        title:"Products Above ₹1,000",
+        task:"Find products costing more than ₹1,000.",
+        sql:`SELECT product_name, price
+FROM products
+WHERE price > 1000;`,
+        why:"WHERE filters records. The greater-than operator " +
+            "returns only products above the specified price."
+      },
+      {
+        title:"Hyderabad Customers",
+        task:"Find customers living in Hyderabad.",
+        sql:`SELECT customer_name, city
+FROM customers
+WHERE city = 'Hyderabad';`,
+        why:"The equality condition matches rows where " +
+            "the city is Hyderabad."
+      },
+      {
+        title:"Unique Product Categories",
+        task:"Find all different product categories.",
+        sql:`SELECT DISTINCT category
+FROM products;`,
+        why:"DISTINCT removes duplicate values from " +
+            "the selected result columns."
+      }
+    ]
+  },
+
+  {
+    name:"Finding the Right Data",
+    description:
+      "Learn how to locate specific records " +
+      "using different filtering conditions.",
+    focus:"AND · OR · IN · BETWEEN · LIKE · NULL",
+    lessons:[
+      {
+        title:"Products Within a Price Range",
+        task:"Find products priced from ₹500 to ₹1,500.",
+        sql:`SELECT product_name, price
+FROM products
+WHERE price BETWEEN 500 AND 1500;`,
+        why:"BETWEEN includes both boundary values. " +
+            "It is useful for filtering ranges."
+      },
+      {
+        title:"Customers in Two Cities",
+        task:"Find customers in Hyderabad or Mumbai.",
+        sql:`SELECT customer_name, city
+FROM customers
+WHERE city = 'Hyderabad'
+   OR city = 'Mumbai';`,
+        why:"OR returns records when either condition " +
+            "is satisfied."
+      },
+      {
+        title:"Products from Selected Categories",
+        task:"Find Electronics and Lifestyle products.",
+        sql:`SELECT product_name, category
+FROM products
+WHERE category IN ('Electronics','Lifestyle');`,
+        why:"IN checks whether a value matches " +
+            "any item in a specified list."
+      },
+      {
+        title:"Search for a Product Name",
+        task:"Find products containing the word Mouse.",
+        sql:`SELECT product_name
+FROM products
+WHERE product_name LIKE '%Mouse%';`,
+        why:"LIKE searches text patterns. The percent symbol " +
+            "matches any sequence of characters."
+      },
+      {
+        title:"Customers with Missing Phone Numbers",
+        task:"Find customers whose phone number is missing.",
+        sql:`SELECT customer_name, phone
+FROM customers
+WHERE phone IS NULL;`,
+        why:"IS NULL identifies missing database values. " +
+            "Using = NULL would not work correctly."
+      }
+    ]
+  },
+
+  {
+    name:"Sorting and Organizing Data",
+    description:
+      "Arrange information, identify top records " +
+      "and perform simple calculations.",
+    focus:"ORDER BY · LIMIT · AS · Expressions",
+    lessons:[
+      {
+        title:"Sort Products by Price",
+        task:"Display products from lowest price to highest.",
+        sql:`SELECT product_name, price
+FROM products
+ORDER BY price ASC;`,
+        why:"ORDER BY sorts query results. ASC means " +
+            "ascending order."
+      },
+      {
+        title:"Three Most Expensive Products",
+        task:"Find the three highest-priced products.",
+        sql:`SELECT product_name, price
+FROM products
+ORDER BY price DESC
+LIMIT 3;`,
+        why:"DESC sorts from highest to lowest. " +
+            "LIMIT restricts the number of returned rows."
+      },
+      {
+        title:"Most Recently Registered Customers",
+        task:"Display the five newest customer registrations.",
+        sql:`SELECT customer_name, registered_date
+FROM customers
+ORDER BY registered_date DESC
+LIMIT 5;`,
+        why:"ISO-formatted dates can be sorted " +
+            "chronologically using ORDER BY."
+      },
+      {
+        title:"Calculate Discounted Prices",
+        task:"Show product prices after a 10% discount.",
+        sql:`SELECT product_name,
+       price,
+       ROUND(price * 0.90, 2) AS discounted_price
+FROM products;`,
+        why:"SQL can calculate expressions. ROUND limits " +
+            "decimal places, and AS provides a readable column name."
+      },
+      {
+        title:"Products with the Lowest Stock",
+        task:"Find three products with the lowest stock, " +
+             "breaking ties by product name.",
+        sql:`SELECT product_name, stock
+FROM products
+ORDER BY stock ASC, product_name ASC
+LIMIT 3;`,
+        why:"ORDER BY supports multiple columns. " +
+            "The second column resolves ties."
+      }
+    ]
+  },
+
+  {
+    name:"Working with Numbers and Calculations",
+    description:
+      "Learn how to calculate useful business metrics " +
+      "using SQL aggregate functions.",
+    focus:"COUNT · SUM · AVG · MIN · MAX",
+    lessons:[
+      {
+        title:"Count Total Products",
+        task:"Find how many products ShopSmart sells.",
+        sql:`SELECT COUNT(*) AS total_products
+FROM products;`,
+        why:"COUNT(*) counts all rows returned by the query."
+      },
+      {
+        title:"Calculate Total Stock",
+        task:"Find the total number of items in stock.",
+        sql:`SELECT SUM(stock) AS total_stock
+FROM products;`,
+        why:"SUM adds numeric values across records."
+      },
+      {
+        title:"Average Product Price",
+        task:"Calculate the average price of all products.",
+        sql:`SELECT ROUND(AVG(price),2) AS average_price
+FROM products;`,
+        why:"AVG calculates the arithmetic mean. ROUND " +
+            "formats the result to two decimal places."
+      },
+      {
+        title:"Lowest and Highest Prices",
+        task:"Find the minimum and maximum product prices.",
+        sql:`SELECT MIN(price) AS lowest_price,
+       MAX(price) AS highest_price
+FROM products;`,
+        why:"MIN finds the smallest value and MAX " +
+            "finds the largest."
+      },
+      {
+        title:"Count Delivered Orders",
+        task:"Find how many orders were delivered.",
+        sql:`SELECT COUNT(*) AS delivered_orders
+FROM orders
+WHERE status = 'Delivered';`,
+        why:"WHERE filters the orders before COUNT " +
+            "calculates the total."
+      }
+    ]
+  },
+
+  {
+    name:"Analyzing Data by Groups",
+    description:
+      "Summarize information by category, city " +
+      "and order status.",
+    focus:"GROUP BY · HAVING · Aggregation",
+    lessons:[
+      {
+        title:"Products in Each Category",
+        task:"Count products by category.",
+        sql:`SELECT category,
+       COUNT(*) AS product_count
+FROM products
+GROUP BY category;`,
+        why:"GROUP BY combines records with the same " +
+            "category before calculating COUNT."
+      },
+      {
+        title:"Average Price by Category",
+        task:"Calculate the average price in every category.",
+        sql:`SELECT category,
+       ROUND(AVG(price),2) AS average_price
+FROM products
+GROUP BY category;`,
+        why:"AVG is calculated separately for each group."
+      },
+      {
+        title:"Customers in Each City",
+        task:"Count registered customers by city.",
+        sql:`SELECT city,
+       COUNT(*) AS customer_count
+FROM customers
+GROUP BY city;`,
+        why:"Grouping by city produces one result row " +
+            "per distinct city."
+      },
+      {
+        title:"Cities with Multiple Customers",
+        task:"Find cities with more than one customer.",
+        sql:`SELECT city,
+       COUNT(*) AS customer_count
+FROM customers
+GROUP BY city
+HAVING COUNT(*) > 1;`,
+        why:"HAVING filters aggregated groups. " +
+            "WHERE filters individual rows instead."
+      },
+      {
+        title:"Order Statuses with Three or More Orders",
+        task:"Find order statuses appearing at least three times.",
+        sql:`SELECT status,
+       COUNT(*) AS order_count
+FROM orders
+GROUP BY status
+HAVING COUNT(*) >= 3;`,
+        why:"HAVING can filter groups based on " +
+            "aggregate results."
+      }
+    ]
+  },
+
+  {
+    name:"Connecting Multiple Tables",
+    description:
+      "Understand how related tables work together " +
+      "through SQL joins.",
+    focus:"INNER JOIN · LEFT JOIN · Multiple Joins",
+    lessons:[
+      {
+        title:"Orders and Customer Names",
+        task:"Display every order with its customer's name.",
+        sql:`SELECT o.order_id,
+       c.customer_name,
+       o.status
+FROM orders o
+INNER JOIN customers c
+  ON o.customer_id = c.customer_id;`,
+        why:"INNER JOIN returns matching records. " +
+            "Aliases such as o and c make queries easier to read."
+      },
+      {
+        title:"All Customers and Their Order Counts",
+        task:"Count orders for every customer, " +
+             "including customers with no orders.",
+        sql:`SELECT c.customer_name,
+       COUNT(o.order_id) AS order_count
+FROM customers c
+LEFT JOIN orders o
+  ON c.customer_id = o.customer_id
+GROUP BY c.customer_id, c.customer_name;`,
+        why:"LEFT JOIN keeps all customer records, " +
+            "including customers with no matching orders."
+      },
+      {
+        title:"Ordered Products and Quantities",
+        task:"Display order numbers, products and quantities.",
+        sql:`SELECT oi.order_id,
+       p.product_name,
+       oi.quantity
+FROM order_items oi
+JOIN products p
+  ON oi.product_id = p.product_id;`,
+        why:"JOIN connects the product identifier in " +
+            "order_items to the product details."
+      },
+      {
+        title:"Customers Who Purchased Electronics",
+        task:"Find customers who purchased Electronics " +
+             "in delivered orders.",
+        sql:`SELECT DISTINCT c.customer_name
+FROM customers c
+JOIN orders o
+  ON c.customer_id = o.customer_id
+JOIN order_items oi
+  ON o.order_id = oi.order_id
+JOIN products p
+  ON oi.product_id = p.product_id
+WHERE o.status = 'Delivered'
+  AND p.category = 'Electronics';`,
+        why:"Multiple joins connect customers, orders, " +
+            "order items and products. DISTINCT removes " +
+            "repeated customer names."
+      },
+      {
+        title:"Complete Delivered Order Details",
+        task:"Show delivered orders with customer names, " +
+             "product names and quantities.",
+        sql:`SELECT o.order_id,
+       c.customer_name,
+       p.product_name,
+       oi.quantity
+FROM orders o
+JOIN customers c
+  ON o.customer_id = c.customer_id
+JOIN order_items oi
+  ON o.order_id = oi.order_id
+JOIN products p
+  ON oi.product_id = p.product_id
+WHERE o.status = 'Delivered';`,
+        why:"Joining related tables lets a report show " +
+            "information that is stored separately."
+      }
+    ]
+  },
+
+  {
+    name:"Writing Smarter SQL",
+    description:
+      "Create useful reporting labels, handle missing " +
+      "values and summarize dates.",
+    focus:"CASE · COALESCE · Date Functions",
+    lessons:[
+      {
+        title:"Classify Products by Price",
+        task:"Label products Budget, Standard or Premium.",
+        sql:`SELECT product_name, price,
+  CASE
+    WHEN price < 500 THEN 'Budget'
+    WHEN price < 1500 THEN 'Standard'
+    ELSE 'Premium'
+  END AS price_category
+FROM products;`,
+        why:"CASE evaluates conditions in order and " +
+            "returns the label for the first matching condition."
+      },
+      {
+        title:"Identify Low-Stock Products",
+        task:"Label products Low Stock when stock is below 5.",
+        sql:`SELECT product_name, stock,
+  CASE
+    WHEN stock < 5 THEN 'Low Stock'
+    ELSE 'Available'
+  END AS stock_status
+FROM products;`,
+        why:"CASE converts numeric conditions into " +
+            "readable business labels."
+      },
+      {
+        title:"Make Order Statuses Easier to Read",
+        task:"Show Completed instead of Delivered " +
+             "and In Progress instead of Pending.",
+        sql:`SELECT order_id, status,
+  CASE
+    WHEN status = 'Delivered' THEN 'Completed'
+    WHEN status = 'Pending' THEN 'In Progress'
+    ELSE status
+  END AS display_status
+FROM orders;`,
+        why:"CASE is helpful when reports need different " +
+            "display labels from the original stored values."
+      },
+      {
+        title:"Replace Missing Phone Numbers",
+        task:"Display Not Provided when a phone number is NULL.",
+        sql:`SELECT customer_name,
+       COALESCE(phone,'Not Provided') AS phone
+FROM customers;`,
+        why:"COALESCE returns the first non-NULL value. " +
+            "It is commonly used to handle missing information."
+      },
+      {
+        title:"Orders by Month",
+        task:"Count how many orders were placed each month.",
+        sql:`SELECT strftime('%Y-%m',order_date) AS month,
+       COUNT(*) AS total_orders
+FROM orders
+GROUP BY strftime('%Y-%m',order_date)
+ORDER BY month;`,
+        why:"SQLite's strftime extracts a year-month value, " +
+            "allowing records to be grouped by month."
+      }
+    ]
+  },
+
+  {
+    name:"Solving Complex Business Questions",
+    description:
+      "Learn how subqueries and CTEs make complex " +
+      "business requirements easier to solve.",
+    focus:"Subqueries · Correlated Queries · CTEs",
+    lessons:[
+      {
+        title:"Products Above Average Price",
+        task:"Find products priced above the store's average.",
+        sql:`SELECT product_name, price
+FROM products
+WHERE price > (
+  SELECT AVG(price)
+  FROM products
+);`,
+        why:"The inner query calculates the average. " +
+            "The outer query compares every product against it."
+      },
+      {
+        title:"Products Above Their Category Average",
+        task:"Find products more expensive than " +
+             "the average in their own category.",
+        sql:`SELECT p.product_name,
+       p.category,
+       p.price
+FROM products p
+WHERE p.price > (
+  SELECT AVG(p2.price)
+  FROM products p2
+  WHERE p2.category = p.category
+);`,
+        why:"A correlated subquery uses the outer row's " +
+            "category to calculate the relevant average."
+      },
+      {
+        title:"Customers Who Never Ordered",
+        task:"Find customers without any orders.",
+        sql:`SELECT c.customer_name
+FROM customers c
+LEFT JOIN orders o
+  ON c.customer_id = o.customer_id
+WHERE o.order_id IS NULL;`,
+        why:"LEFT JOIN preserves every customer. " +
+            "IS NULL identifies those with no matching order."
+      },
+      {
+        title:"Order Counts by City Using a CTE",
+        task:"Count orders for every city using a CTE.",
+        sql:`WITH city_orders AS (
+  SELECT c.city,
+         COUNT(o.order_id) AS order_count
+  FROM customers c
+  LEFT JOIN orders o
+    ON c.customer_id = o.customer_id
+  GROUP BY c.city
+)
+SELECT city, order_count
+FROM city_orders
+ORDER BY order_count DESC, city;`,
+        why:"WITH creates a named temporary result. " +
+            "The main query can then use that result " +
+            "for sorting or further analysis."
+      },
+      {
+        title:"Customer Spending Using a CTE",
+        task:"Calculate spending on delivered orders " +
+             "for each customer with delivered purchases.",
+        sql:`WITH customer_sales AS (
+  SELECT c.customer_name,
+         SUM(oi.quantity * oi.unit_price) AS total_spend
+  FROM customers c
+  JOIN orders o
+    ON c.customer_id = o.customer_id
+  JOIN order_items oi
+    ON o.order_id = oi.order_id
+  WHERE o.status = 'Delivered'
+  GROUP BY c.customer_id, c.customer_name
+)
+SELECT customer_name, total_spend
+FROM customer_sales
+ORDER BY total_spend DESC;`,
+        why:"The CTE calculates spending by customer. " +
+            "The outer query displays customers " +
+            "from highest spending to lowest."
+      }
+    ]
+  },
+
+  {
+    name:"Analytical SQL",
+    description:
+      "Discover ranking, row numbering and " +
+      "running-total calculations.",
+    focus:"ROW_NUMBER · RANK · DENSE_RANK · Window Functions",
+    lessons:[
+      {
+        title:"Rank Products by Price",
+        task:"Assign a price rank to every product.",
+        sql:`SELECT product_name, price,
+       RANK() OVER (
+         ORDER BY price DESC
+       ) AS price_rank
+FROM products
+ORDER BY price_rank, product_name;`,
+        why:"RANK assigns ranking positions. " +
+            "Equal values share a rank, and gaps may appear."
+      },
+      {
+        title:"Top Two Products in Each Category",
+        task:"Find the two most expensive products per category.",
+        sql:`WITH ranked_products AS (
+  SELECT product_name,
+         category,
+         price,
+         ROW_NUMBER() OVER (
+           PARTITION BY category
+           ORDER BY price DESC, product_name
+         ) AS rn
+  FROM products
+)
+SELECT category, product_name, price
+FROM ranked_products
+WHERE rn <= 2
+ORDER BY category, price DESC;`,
+        why:"PARTITION BY creates a separate numbering " +
+            "sequence for each category."
+      },
+      {
+        title:"Find Each Customer's First Order",
+        task:"Identify the earliest order placed by each customer.",
+        sql:`WITH ranked_orders AS (
+  SELECT customer_id,
+         order_id,
+         order_date,
+         ROW_NUMBER() OVER (
+           PARTITION BY customer_id
+           ORDER BY order_date, order_id
+         ) AS rn
+  FROM orders
+)
+SELECT customer_id, order_id, order_date
+FROM ranked_orders
+WHERE rn = 1
+ORDER BY customer_id;`,
+        why:"ROW_NUMBER identifies the first record " +
+            "within each customer's ordered set."
+      },
+      {
+        title:"Running Total of Delivered Revenue",
+        task:"Calculate cumulative delivered sales by date.",
+        sql:`WITH daily_sales AS (
+  SELECT o.order_date,
+         SUM(oi.quantity * oi.unit_price) AS daily_revenue
+  FROM orders o
+  JOIN order_items oi
+    ON o.order_id = oi.order_id
+  WHERE o.status = 'Delivered'
+  GROUP BY o.order_date
+)
+SELECT order_date,
+       daily_revenue,
+       SUM(daily_revenue) OVER (
+         ORDER BY order_date
+         ROWS BETWEEN UNBOUNDED PRECEDING
+                  AND CURRENT ROW
+       ) AS running_revenue
+FROM daily_sales
+ORDER BY order_date;`,
+        why:"A window SUM adds the current day's revenue " +
+            "to all earlier days, creating a running total."
+      },
+      {
+        title:"Rank Customers by Spending",
+        task:"Rank customers by total spending on delivered orders.",
+        sql:`WITH customer_spend AS (
+  SELECT c.customer_name,
+         SUM(oi.quantity * oi.unit_price) AS total_spend
+  FROM customers c
+  JOIN orders o
+    ON c.customer_id = o.customer_id
+  JOIN order_items oi
+    ON o.order_id = oi.order_id
+  WHERE o.status = 'Delivered'
+  GROUP BY c.customer_id, c.customer_name
+)
+SELECT customer_name,
+       total_spend,
+       DENSE_RANK() OVER (
+         ORDER BY total_spend DESC
+       ) AS spend_rank
+FROM customer_spend
+ORDER BY spend_rank, customer_name;`,
+        why:"DENSE_RANK assigns consecutive ranks " +
+            "even when two customers have equal spending."
+      }
+    ]
+  },
+
+  {
+    name:"Real-World SQL Project Challenges",
+    description:
+      "Bring your SQL knowledge together in " +
+      "practical business reporting examples.",
+    focus:"Sales · Inventory · Customer Analytics · Reporting",
+    lessons:[
+      {
+        title:"Monthly Sales Dashboard",
+        task:"Calculate delivered revenue and order counts by month.",
+        sql:`SELECT strftime('%Y-%m',o.order_date) AS month,
+       COUNT(DISTINCT o.order_id) AS delivered_orders,
+       SUM(oi.quantity * oi.unit_price) AS revenue
+FROM orders o
+JOIN order_items oi
+  ON o.order_id = oi.order_id
+WHERE o.status = 'Delivered'
+GROUP BY strftime('%Y-%m',o.order_date)
+ORDER BY month;`,
+        why:"This report combines joins, filtering, grouping " +
+            "and aggregation to generate monthly sales metrics."
+      },
+      {
+        title:"Inventory and Sales Report",
+        task:"Find products with fewer than 10 items in stock " +
+             "and their delivered sales quantities.",
+        sql:`SELECT p.product_name,
+       p.stock,
+       COALESCE(SUM(
+         CASE
+           WHEN o.status = 'Delivered'
+           THEN oi.quantity
+           ELSE 0
+         END
+       ),0) AS units_sold
+FROM products p
+LEFT JOIN order_items oi
+  ON p.product_id = oi.product_id
+LEFT JOIN orders o
+  ON oi.order_id = o.order_id
+WHERE p.stock < 10
+GROUP BY p.product_id, p.product_name, p.stock
+ORDER BY p.stock ASC;`,
+        why:"LEFT JOIN preserves products. CASE ensures " +
+            "only delivered quantities count as sales."
+      },
+      {
+        title:"Top Five Customers",
+        task:"Find the five customers with the highest " +
+             "spending on delivered orders.",
+        sql:`SELECT c.customer_name,
+       SUM(oi.quantity * oi.unit_price) AS total_spend
+FROM customers c
+JOIN orders o
+  ON c.customer_id = o.customer_id
+JOIN order_items oi
+  ON o.order_id = oi.order_id
+WHERE o.status = 'Delivered'
+GROUP BY c.customer_id, c.customer_name
+ORDER BY total_spend DESC, c.customer_name
+LIMIT 5;`,
+        why:"The query combines three tables, calculates " +
+            "customer spending and returns the top five."
+      },
+      {
+        title:"Best-Selling Product in Each Category",
+        task:"Find the product with the most delivered " +
+             "units sold in each category.",
+        sql:`WITH product_sales AS (
+  SELECT p.product_id,
+         p.product_name,
+         p.category,
+         SUM(oi.quantity) AS units_sold
+  FROM products p
+  JOIN order_items oi
+    ON p.product_id = oi.product_id
+  JOIN orders o
+    ON oi.order_id = o.order_id
+  WHERE o.status = 'Delivered'
+  GROUP BY p.product_id, p.product_name, p.category
+),
+ranked AS (
+  SELECT *,
+         ROW_NUMBER() OVER (
+           PARTITION BY category
+           ORDER BY units_sold DESC, product_name
+         ) AS rn
+  FROM product_sales
+)
+SELECT category, product_name, units_sold
+FROM ranked
+WHERE rn = 1
+ORDER BY category;`,
+        why:"CTEs calculate product sales, then ROW_NUMBER " +
+            "selects the top-selling product in each category."
+      },
+      {
+        title:"Complete Business Performance Summary",
+        task:"Show delivered revenue, average delivered-order " +
+             "value and total registered customers.",
+        sql:`WITH delivered_sales AS (
+  SELECT o.order_id,
+         SUM(oi.quantity * oi.unit_price) AS order_total
+  FROM orders o
+  JOIN order_items oi
+    ON o.order_id = oi.order_id
+  WHERE o.status = 'Delivered'
+  GROUP BY o.order_id
+)
+SELECT ROUND(COALESCE(SUM(order_total),0),2)
+         AS total_revenue,
+       ROUND(COALESCE(AVG(order_total),0),2)
+         AS average_order_value,
+       (SELECT COUNT(*) FROM customers)
+         AS total_customers
+FROM delivered_sales;`,
+        why:"This summary combines a CTE, aggregates, " +
+            "NULL handling and a subquery into " +
+            "one business reporting result."
+      }
+    ]
+  }
+
+];
+
+// EXAMPLE DATABASE
+const sampleData = {
+
+  products: [
+    [1,"Wireless Mouse","Electronics",799,8],
+    [2,"Bluetooth Speaker","Electronics",2299,4],
+    [3,"USB-C Cable","Electronics",399,25],
+    [4,"Notebook","Stationery",149,6],
+    [5,"Travel Mug","Lifestyle",599,15],
+    [6,"Desk Lamp","Lifestyle",1299,3],
+    [7,"Backpack","Lifestyle",1799,10],
+    [8,"Pen Set","Stationery",249,40]
+  ],
+
+  customers: [
+    [1,"Asha","Hyderabad","9876500001","2026-01-03"],
+    [2,"Rahul","Mumbai",null,"2026-01-07"],
+    [3,"Priya","Bengaluru","9876500003","2026-01-15"],
+    [4,"Arjun","Hyderabad",null,"2026-02-03"],
+    [5,"Neha","Chennai","9876500005","2026-02-12"],
+    [6,"Kabir","Pune","9876500006","2026-02-20"],
+    [7,"Meera","Mumbai","9876500007","2026-03-01"]
+  ],
+
+  orders: [
+    [101,1,"2026-01-08","Delivered"],
+    [102,2,"2026-01-13","Delivered"],
+    [103,1,"2026-01-15","Pending"],
+    [104,3,"2026-02-03","Delivered"],
+    [105,4,"2026-02-06","Delivered"],
+    [106,5,"2026-02-10","Delivered"],
+    [107,2,"2026-02-11","Cancelled"],
+    [108,6,"2026-03-05","Delivered"],
+    [109,4,"2026-03-09","Pending"],
+    [110,3,"2026-03-11","Delivered"],
+    [111,5,"2026-03-12","Delivered"],
+    [112,1,"2026-03-14","Delivered"],
+    [113,6,"2026-03-17","Pending"],
+    [114,2,"2026-03-19","Delivered"],
+    [115,3,"2026-04-02","Cancelled"],
+    [116,4,"2026-04-05","Delivered"],
+    [117,5,"2026-04-07","Delivered"]
+  ],
+
+  order_items: [
+    [101,2,1,2299],
+    [102,1,2,799],
+    [103,6,1,1299],
+    [104,4,3,149],
+    [105,7,1,1799],
+    [106,2,2,2299],
+    [107,5,2,599],
+    [108,3,4,399],
+    [109,1,1,799],
+    [110,6,1,1299],
+    [111,4,1,149],
+    [112,1,1,799],
+    [113,7,2,1799],
+    [114,5,3,599],
+    [115,8,2,249],
+    [116,3,1,399],
+    [117,2,1,2299]
+  ]
+
+};
+
+const $ = id => document.getElementById(id);
+
+let SQL;
+let database;
+let activeModule = 0;
+let activeQuestion = 0;
+
+const rawProgress = (() => {
+  try {
+    return JSON.parse(
+      localStorage.getItem("queryquest_50_learning") || "[]"
+    );
+  } catch {
+    return [];
+  }
+})();
+
+const reviewed = Array.from(
+  {length:50},
+  (_,i) => Array.isArray(rawProgress) &&
+           rawProgress[i] === true
+);
+
+// CREATE DATABASE
+function createDatabase() {
+  const db = new SQL.Database();
+
+  db.run(`
+    CREATE TABLE products (
+      product_id INTEGER PRIMARY KEY,
+      product_name TEXT,
+      category TEXT,
+      price INTEGER,
+      stock INTEGER
+    );
+
+    CREATE TABLE customers (
+      customer_id INTEGER PRIMARY KEY,
+      customer_name TEXT,
+      city TEXT,
+      phone TEXT,
+      registered_date TEXT
+    );
+
+    CREATE TABLE orders (
+      order_id INTEGER PRIMARY KEY,
+      customer_id INTEGER,
+      order_date TEXT,
+      status TEXT
+    );
+
+    CREATE TABLE order_items (
+      order_id INTEGER,
+      product_id INTEGER,
+      quantity INTEGER,
+      unit_price INTEGER
+    );
+  `);
+
+  Object.entries(sampleData).forEach(([table,rows]) => {
+    const placeholders = rows[0].map(() => "?").join(",");
+
+    const statement = db.prepare(
+      "INSERT INTO " + table +
+      " VALUES (" + placeholders + ")"
+    );
+
+    try {
+      rows.forEach(row => statement.run(row));
+    } finally {
+      statement.free();
+    }
+  });
+
+  return db;
+}
+
+// DISPLAY TABLE
+function makeTable(target,columns,rows) {
+  const container = $(target);
+  container.replaceChildren();
+
+  const table = document.createElement("table");
+  const thead = document.createElement("thead");
+  const heading = document.createElement("tr");
+
+  columns.forEach(column => {
+    const th = document.createElement("th");
+    th.textContent = column;
+    heading.appendChild(th);
+  });
+
+  thead.appendChild(heading);
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+
+  rows.forEach(row => {
+    const tr = document.createElement("tr");
+
+    row.forEach(value => {
+      const td = document.createElement("td");
+      td.textContent =
+        value === null ? "NULL" : String(value);
+      tr.appendChild(td);
+    });
+
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(tbody);
+  container.appendChild(table);
+}
+
+// PROGRESS
+function lessonIndex(moduleIndex,questionIndex) {
+  return moduleIndex * 5 + questionIndex;
+}
+
+function updateProgress() {
+  const count = reviewed.filter(Boolean).length;
+
+  $("progressText").textContent =
+    count + " of 50 reviewed";
+
+  $("progressFill").style.width =
+    (count * 2) + "%";
+
+  $("reviewButton").textContent =
+    reviewed[lessonIndex(activeModule,activeQuestion)]
+      ? "Reviewed"
+      : "Mark as Reviewed";
+}
+
+function markReviewed() {
+  const index = lessonIndex(
+    activeModule,
+    activeQuestion
+  );
+
+  reviewed[index] = true;
+
+  try {
+    localStorage.setItem(
+      "queryquest_50_learning",
+      JSON.stringify(reviewed)
+    );
+  } catch {
+    // Progress can still be used in this browser session.
+  }
+
+  updateProgress();
+  renderQuestionNavigation();
+  renderModuleNavigation();
+}
+
+// MODULE NAVIGATION
+function renderModuleNavigation() {
+  const nav = $("moduleNav");
+  nav.replaceChildren();
+
+  modules.forEach((module,i) => {
+    const button = document.createElement("button");
+    button.className =
+      "module-button" +
+      (i === activeModule ? " active" : "");
+
+    const number = document.createElement("span");
+    number.className = "module-number";
+    number.textContent = String(i+1).padStart(2,"0");
+
+    const info = document.createElement("span");
+    info.className = "module-text";
+
+    const title = document.createElement("strong");
+    title.textContent = module.name;
+
+    const count = document.createElement("small");
+    const done = reviewed.slice(i*5,i*5+5)
+                         .filter(Boolean).length;
+
+    count.textContent = done + "/5 reviewed";
+
+    info.append(title,count);
+    button.append(number,info);
+
+    button.onclick = () => selectModule(i);
+
+    nav.appendChild(button);
+  });
+}
+
+function selectModule(index) {
+  activeModule = index;
+  activeQuestion = 0;
+
+  const module = modules[index];
+
+  $("moduleNumber").textContent =
+    "MODULE " + String(index+1).padStart(2,"0");
+
+  $("moduleTitle").textContent = module.name;
+  $("moduleDescription").textContent =
+    module.description;
+
+  $("moduleFocus").textContent = module.focus;
+
+  renderModuleNavigation();
+  renderQuestionNavigation();
+  showLesson();
+}
+
+// QUESTIONS
+function renderQuestionNavigation() {
+  const nav = $("questionNav");
+  nav.replaceChildren();
+
+  const lessons = modules[activeModule].lessons;
+
+  lessons.forEach((lesson,i) => {
+    const button = document.createElement("button");
+
+    button.className =
+      "question-button" +
+      (i === activeQuestion ? " active" : "");
+
+    const number = document.createElement("span");
+    number.className = "question-no";
+    number.textContent = String(i+1).padStart(2,"0");
+
+    const title = document.createElement("span");
+    title.className = "question-name";
+    title.textContent = lesson.title;
+
+    const state = document.createElement("span");
+    state.className = "question-status";
+
+    state.textContent =
+      reviewed[lessonIndex(activeModule,i)]
+        ? "Reviewed"
+        : "";
+
+    button.append(number,title,state);
+
+    button.onclick = () => {
+      activeQuestion = i;
+      renderQuestionNavigation();
+      showLesson();
+
+      $("lesson").scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+    };
+
+    nav.appendChild(button);
+  });
+}
+
+function showLesson() {
+  const lesson =
+    modules[activeModule].lessons[activeQuestion];
+
+  $("lessonNumber").textContent =
+    "MODULE " + String(activeModule+1).padStart(2,"0") +
+    " / QUERY " + String(activeQuestion+1).padStart(2,"0");
+
+  $("lessonTitle").textContent = lesson.title;
+
+  $("lessonIntroduction").textContent =
+    "Learn how this SQL statement solves " +
+    "a practical business requirement.";
+
+  $("lessonTask").textContent = lesson.task;
+  $("sqlCode").textContent = lesson.sql;
+  $("lessonExplanation").textContent = lesson.why;
+
+  $("lessonPosition").textContent =
+    "Query " + (lessonIndex(activeModule,activeQuestion)+1) +
+    " of 50";
+
+  $("resultSection").style.display = "none";
+  $("queryOutput").replaceChildren();
+  $("resultMessage").textContent = "";
+
+  $("nextButton").textContent =
+    lessonIndex(activeModule,activeQuestion) === 49
+      ? "Back to First Module"
+      : "Next Query";
+
+  updateProgress();
+}
+
+// NAVIGATE TO NEXT QUERY
+function nextQuery() {
+  if (activeQuestion < 4) {
+    activeQuestion++;
+    renderQuestionNavigation();
+    showLesson();
+  } else if (activeModule < 9) {
+    selectModule(activeModule+1);
+  } else {
+    selectModule(0);
+  }
+
+  $("lesson").scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+}
+
+// DATABASE EXPLORER
+function showDatabase(name) {
+  if (!database) return;
+
+  const availableTables = [
+    "products","customers","orders","order_items"
+  ];
+
+  if (!availableTables.includes(name)) return;
+
+  const results = database.exec(
+    "SELECT * FROM " + name
+  );
+
+  if (!results.length) return;
+
+  makeTable(
+    "dbTable",
+    results[0].columns,
+    results[0].values
+  );
+
+  $("dbLabel").textContent =
+    name + " · " + results[0].values.length + " records";
+
+  document.querySelectorAll("[data-db]").forEach(
+    button => {
+      button.classList.toggle(
+        "active",
+        button.dataset.db === name
+      );
+    }
+  );
+}
+
+// RUN LEARNING EXAMPLE
+function runExample() {
+  if (!database) return;
+
+  const lesson =
+    modules[activeModule].lessons[activeQuestion];
+
+  try {
+    const results = database.exec(lesson.sql);
+
+    if (!results.length) {
+      $("queryOutput").textContent =
+        "No records returned.";
+
+      $("resultMessage").textContent =
+        "This example returned no records.";
+    } else {
+      makeTable(
+        "queryOutput",
+        results[0].columns,
+        results[0].values
+      );
+
+      $("resultMessage").textContent =
+        results[0].values.length +
+        " result rows returned.";
+    }
+
+    $("resultSection").style.display = "block";
+
+  } catch(error) {
+    $("resultSection").style.display = "block";
+
+    $("resultMessage").textContent =
+      "SQL Error: " + error.message;
+  }
+}
+
+// BUTTON EVENTS
+$("runButton").onclick = runExample;
+$("reviewButton").onclick = markReviewed;
+$("nextButton").onclick = nextQuery;
+
+$("copyButton").onclick = async () => {
+  const sql =
+    modules[activeModule].lessons[activeQuestion].sql;
+
+  try {
+    await navigator.clipboard.writeText(sql);
+
+    $("copyButton").textContent = "Copied";
+
+    setTimeout(() => {
+      $("copyButton").textContent = "Copy SQL";
+    },1500);
+
+  } catch {
+    $("copyButton").textContent =
+      "Select the query to copy";
+  }
+};
+
+document.querySelectorAll("[data-db]").forEach(
+  button => {
+    button.onclick = () => {
+      showDatabase(button.dataset.db);
+    };
+  }
+);
+
+// INITIALIZE NAVIGATION
+selectModule(0);
+
+// INITIALIZE SQL.JS
+async function initialize() {
+  try {
+    if (typeof initSqlJs !== "function") {
+      throw new Error("SQL library unavailable");
+    }
+
+    SQL = await initSqlJs({
+      locateFile: file =>
+        "https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/" +
+        file
+    });
+
+    database = createDatabase();
+
+    $("runButton").disabled = false;
+    showDatabase("products");
+
+  } catch(error) {
+    $("dbTable").textContent =
+      "Unable to load the sample database. " +
+      "Check your internet connection and refresh.";
+  }
+}
+
+initialize();
+
+</script>
+</body>
+</html>
