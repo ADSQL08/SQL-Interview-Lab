@@ -4,19 +4,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>5 Free SQL Challenges | QueryQuest</title>
+<title>SQL Practice Workspace | QueryQuest</title>
 
 <style>
 :root {
   --navy: #10263a;
   --teal: #098b7c;
-  --cream: #faf5e9;
+  --cream: #faf7f0;
   --text: #203447;
-  --muted: #607183;
-  --border: #e0e8e4;
+  --muted: #657789;
+  --line: #e0e7e5;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -26,156 +28,212 @@ body {
   line-height: 1.65;
 }
 
+button, textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+}
+
+/* HEADER */
+
 header {
   background: var(--navy);
-  padding: 18px 6%;
+  padding: 17px 6%;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
   gap: 12px;
 }
 
 .logo {
   color: white;
-  text-decoration: none;
-  font-size: 27px;
-  font-weight: bold;
-}
-
-.logo span { color: #54e0bd; }
-
-header a.back {
-  color: #e1eeea;
+  font-size: 25px;
+  font-weight: 800;
   text-decoration: none;
 }
+
+.logo span {
+  color: #5ce0c3;
+}
+
+header nav {
+  display: flex;
+  gap: 22px;
+}
+
+header nav a {
+  color: #e5f0ed;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+/* HERO */
 
 .hero {
-  background: linear-gradient(120deg,#10263a,#176b69);
+  background: linear-gradient(115deg, #10263a, #176a68);
   color: white;
-  text-align: center;
   padding: 48px 20px;
 }
 
+.hero-inner {
+  max-width: 1050px;
+  margin: auto;
+}
+
 .eyebrow {
-  color: #83f0d7;
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 800;
+  color: #85ebd6;
   letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .hero h1 {
-  font-size: clamp(32px,5vw,50px);
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1.2;
   margin: 12px 0;
 }
 
 .hero p {
   max-width: 700px;
-  margin: auto;
-  color: #e1f1ee;
+  color: #dcefeb;
+  font-size: 16px;
 }
 
-.stats {
+.progress-summary {
   display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 25px;
+  justify-content: space-between;
+  max-width: 650px;
+  margin-top: 26px;
+  font-size: 14px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
-.stat {
-  background: #ffffff19;
-  border: 1px solid #ffffff35;
-  border-radius: 12px;
-  padding: 12px 25px;
-}
-
-.stat strong {
-  display: block;
-  font-size: 25px;
-}
-
-.stat small { color: #d9ede9; }
-
-.progress {
-  width: min(500px, 100%);
-  height: 10px;
+.progress-track {
+  background: #ffffff38;
+  max-width: 650px;
+  height: 8px;
   border-radius: 20px;
-  background: #ffffff40;
-  margin: 22px auto 0;
   overflow: hidden;
+  margin-top: 11px;
 }
 
 #progressBar {
   width: 0;
   height: 100%;
-  background: #65eccb;
+  background: #75e6c7;
   transition: width .3s;
 }
 
+/* LAYOUT */
+
 main {
-  max-width: 1100px;
+  max-width: 1050px;
+  padding: 30px 18px 70px;
   margin: auto;
-  padding: 30px 20px 70px;
 }
 
-.card {
+.panel {
   background: white;
-  border: 1px solid var(--border);
-  border-radius: 17px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
   padding: 28px;
   margin-bottom: 23px;
-  box-shadow: 0 5px 20px #10263a0b;
+  box-shadow: 0 4px 20px #10263a08;
 }
 
-.card h2 {
-  color: #123d46;
-  margin: 10px 0 15px;
-}
-
-.card p { color: #536679; }
-
-.label {
-  display: inline-block;
-  background: #e2f6ee;
-  color: #087763;
-  border-radius: 25px;
-  padding: 6px 14px;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.small {
-  font-size: 13px;
-  color: var(--muted);
-}
-
-/* Database tabs */
-.table-tabs {
+.section-head {
   display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  align-items: center;
   flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.section-kicker {
+  text-transform: uppercase;
+  color: var(--teal);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+h2 {
+  font-size: 24px;
+  color: #173d46;
+  margin: 0 0 10px;
+}
+
+h3 {
+  color: #173d46;
+}
+
+.description {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.mini-label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* DATABASE */
+
+.tabs {
+  display: flex;
   gap: 10px;
-  margin: 20px 0;
+  flex-wrap: wrap;
+  margin: 22px 0 16px;
 }
 
 .tab {
-  border: 1px solid #cce4dd;
-  background: #f1f8f4;
-  color: #176b5d;
-  padding: 11px 18px;
+  background: #f3f7f5;
+  color: #315d56;
+  border: 1px solid #d6e5df;
   border-radius: 9px;
-  cursor: pointer;
-  font-weight: bold;
+  padding: 10px 17px;
+  font-weight: 600;
 }
 
 .tab.active {
-  background: var(--teal);
   color: white;
+  background: var(--teal);
+  border-color: var(--teal);
+}
+
+.table-frame {
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  overflow: hidden;
+}
+
+.table-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f4f7f5;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+  font-weight: 600;
 }
 
 .table-scroll {
   overflow-x: auto;
-  max-height: 350px;
+  max-height: 340px;
 }
 
 table {
@@ -184,119 +242,211 @@ table {
   font-size: 14px;
 }
 
-th,td {
-  padding: 12px;
-  border: 1px solid #e0e8e7;
-  text-align: left;
-}
-
 th {
-  background: #e5f4ef;
-  color: #17564e;
+  background: #f8faf9;
+  color: #274f4a;
+  font-size: 12px;
+  text-transform: none;
+  font-weight: 700;
 }
 
-tr:nth-child(even) {
-  background: #fafcfb;
+th, td {
+  text-align: left;
+  border-bottom: 1px solid #ecf0ee;
+  padding: 12px 15px;
+  white-space: nowrap;
 }
 
-/* Mission choices */
-.mission-grid {
-  display: grid;
-  grid-template-columns: repeat(5,1fr);
-  gap: 12px;
+tr:last-child td {
+  border-bottom: 0;
+}
+
+tbody tr:hover {
+  background: #f7faf8;
+}
+
+/* CHALLENGE LIST */
+
+.challenge-list {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
   margin-top: 20px;
 }
 
-.mission {
-  background: #f7faf7;
-  border: 1px solid #dfebe4;
-  border-radius: 13px;
-  padding: 17px 10px;
-  cursor: pointer;
-  text-align: center;
+.challenge-row {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  width: 100%;
+  gap: 19px;
+  padding: 17px 20px;
+  background: white;
+  border: 0;
+  border-bottom: 1px solid var(--line);
   color: var(--text);
-  font: inherit;
 }
 
-.mission.active {
-  background: #e0f8ee;
-  border: 2px solid #0a937f;
+.challenge-row:last-child {
+  border-bottom: 0;
 }
 
-.mission-icon {
-  font-size: 32px;
+.challenge-row:hover {
+  background: #f7faf8;
+}
+
+.challenge-row.active {
+  background: #e9f6f1;
+  box-shadow: inset 4px 0 var(--teal);
+}
+
+.challenge-number {
+  color: #738b90;
+  font-size: 17px;
+  font-weight: 700;
+  min-width: 34px;
+}
+
+.challenge-row.active .challenge-number {
+  color: #077b6a;
+}
+
+.challenge-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.challenge-title {
   display: block;
+  font-size: 16px;
+  font-weight: 700;
+  color: #193c44;
+}
+
+.challenge-subtitle {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 3px;
+}
+
+.challenge-state {
+  color: #6a7c7c;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.challenge-row.active .challenge-state {
+  color: #067d6c;
+  font-weight: 700;
+}
+
+/* WORKSPACE */
+
+.workspace-title {
+  font-size: 28px;
+  margin: 6px 0 18px;
+}
+
+.story {
+  color: #425d61;
+  font-size: 15px;
+  margin: 0 0 24px;
+}
+
+.task-box {
+  background: #f3f8f5;
+  border: 1px solid #e0ebe5;
+  border-radius: 11px;
+  padding: 20px;
+  margin-bottom: 27px;
+}
+
+.task-box h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.task-box p {
+  margin: 0 0 10px;
+}
+
+.editor-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
   margin-bottom: 10px;
 }
 
-.mission-name {
-  display: block;
-  font-size: 13px;
-  font-weight: bold;
+.editor-head h3 {
+  margin: 0;
+  font-size: 17px;
 }
 
-.mission-status {
-  display: block;
-  color: #618074;
+.editor-frame {
+  overflow: hidden;
+  border-radius: 12px;
+  background: #10263a;
+  border: 1px solid #24465b;
+}
+
+.editor-top {
+  background: #1a3449;
+  padding: 10px 16px;
+  color: #b8d3d0;
   font-size: 12px;
-  margin-top: 8px;
-}
-
-/* Active challenge */
-.story {
-  background: #f1f8f4;
-  border-left: 4px solid var(--teal);
-  padding: 19px;
-  border-radius: 11px;
-  margin: 20px 0;
-}
-
-.story p { margin-bottom: 0; }
-
-.question {
-  font-size: 19px;
-  font-weight: bold;
-  color: #173c43;
 }
 
 textarea {
+  display: block;
   width: 100%;
-  min-height: 160px;
-  padding: 18px;
-  border: 1px solid #294858;
-  border-radius: 12px;
-  background: #10263a;
-  color: #d4fff1;
-  font: 15px/1.7 Consolas,monospace;
+  min-height: 185px;
+  padding: 20px;
+  border: 0;
+  outline: 0;
   resize: vertical;
+  background: #10263a;
+  color: #d5fff1;
+  font: 15px/1.8 Consolas, "Courier New", monospace;
 }
 
-.buttons {
+textarea::placeholder {
+  color: #93acb5;
+}
+
+.actions {
   display: flex;
-  flex-wrap: wrap;
   gap: 10px;
-  margin: 16px 0;
+  flex-wrap: wrap;
+  margin-top: 17px;
 }
 
 .btn {
-  border: 0;
-  border-radius: 9px;
-  padding: 12px 19px;
-  background: var(--teal);
-  color: white;
-  cursor: pointer;
-  font: inherit;
-  font-weight: bold;
-  text-decoration: none;
   display: inline-block;
+  background: var(--teal);
+  border: 1px solid var(--teal);
+  border-radius: 8px;
+  color: white;
+  padding: 11px 18px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
 }
 
-.btn.dark { background: #17364c; }
+.btn:hover {
+  filter: brightness(.94);
+}
 
 .btn.secondary {
-  background: #eaf3ef;
-  color: #17675b;
-  border: 1px solid #cce3da;
+  background: white;
+  color: #20685e;
+  border-color: #c8dcd5;
+}
+
+.btn.dark {
+  background: #17384c;
+  border-color: #17384c;
 }
 
 .btn:disabled {
@@ -305,106 +455,191 @@ textarea {
 }
 
 .feedback {
-  background: #f1f5f4;
-  padding: 15px;
-  border-radius: 10px;
-  margin: 17px 0;
+  padding: 15px 17px;
+  border-radius: 9px;
+  background: #f2f6f4;
+  color: #4d676b;
+  font-size: 14px;
+  margin-top: 18px;
 }
 
 .feedback.success {
-  background: #e0f8e9;
-  color: #086a43;
+  background: #e2f7ea;
+  color: #116b48;
 }
 
 .feedback.warning {
-  background: #fff2dc;
-  color: #916111;
+  background: #fff2de;
+  color: #895b16;
 }
 
 .feedback.error {
-  background: #ffe9e9;
-  color: #a12b2b;
+  background: #ffeded;
+  color: #a32c2c;
 }
 
 #hintBox {
   display: none;
-  background: #fff5df;
-  border-left: 4px solid #d9a048;
+  background: #fff6e9;
+  border-left: 3px solid #d0a05c;
+  border-radius: 8px;
+  margin-top: 15px;
   padding: 15px;
-  border-radius: 9px;
-  margin: 15px 0;
+  color: #795724;
+  font-size: 14px;
 }
 
-#solutionBox {
+/* SOLUTION: NO ICON */
+
+.solution-panel {
+  margin-top: 25px;
+  border-top: 1px solid var(--line);
+  padding-top: 23px;
+}
+
+.solution-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.solution-heading h3 {
+  margin: 0;
+  font-size: 19px;
+}
+
+#solutionContent {
   display: none;
-  white-space: pre-wrap;
+  margin-top: 18px;
+}
+
+.solution-code {
   background: #eef5f2;
+  border: 1px solid #dfebe4;
+  border-radius: 9px;
   padding: 18px;
-  border-radius: 10px;
   overflow-x: auto;
-  font: 14px/1.7 Consolas,monospace;
+  font: 14px/1.8 Consolas, monospace;
+  white-space: pre-wrap;
 }
 
-/* Completion */
-#celebration {
+.solution-explanation {
+  color: #526a65;
+  font-size: 14px;
+  margin-top: 13px;
+}
+
+/* RESULTS: NO ICON */
+
+.results-placeholder {
+  color: #6c7c83;
+  font-size: 14px;
+  padding: 18px;
+}
+
+#resultCount {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* COMPLETION */
+
+#completion {
   display: none;
-  background: linear-gradient(120deg,#10263a,#145c5b);
+  background: linear-gradient(120deg,#11283d,#165b58);
   color: white;
-  border-radius: 18px;
-  padding: 35px;
-  text-align: center;
-  margin-top: 30px;
+  border-radius: 16px;
+  padding: 32px;
+  margin-top: 25px;
 }
 
-#celebration h2 {
-  font-size: 30px;
+#completion h2,
+#completion h3 {
   color: white;
 }
 
-#celebration p { color: #e0f0ec; }
+#completion p {
+  color: #e2f1ed;
+}
 
-.reward {
-  display: inline-block;
-  padding: 8px 18px;
-  border-radius: 30px;
-  background: #ffffff20;
-  color: #f0d48a;
-  margin: 12px 0;
+.completion-stats {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin: 23px 0;
+}
+
+.completion-stat {
+  background: #ffffff15;
+  border: 1px solid #ffffff28;
+  padding: 15px 22px;
+  border-radius: 10px;
+}
+
+.completion-stat strong {
+  display: block;
+  font-size: 25px;
 }
 
 .premium {
-  border-top: 1px solid #ffffff35;
-  margin-top: 25px;
+  border-top: 1px solid #ffffff30;
+  margin-top: 27px;
   padding-top: 25px;
 }
 
 .price {
-  font-size: 38px;
-  font-weight: bold;
+  font-size: 35px;
+  font-weight: 800;
   color: white;
+  margin: 15px 0 4px;
 }
 
 footer {
-  background: var(--navy);
-  color: white;
   text-align: center;
+  color: #d8e8e4;
+  background: var(--navy);
   padding: 25px;
+  font-size: 13px;
 }
 
-@media(max-width:800px) {
-  .mission-grid {
-    grid-template-columns: repeat(3,1fr);
-  }
-}
-
-@media(max-width:550px) {
-  .mission-grid {
-    grid-template-columns: repeat(2,1fr);
+@media(max-width:600px) {
+  header nav {
+    gap: 13px;
   }
 
-  main { padding: 22px 13px 45px; }
-  .card { padding: 20px; }
-  .hero { padding: 40px 17px; }
+  .hero {
+    padding: 37px 18px;
+  }
+
+  main {
+    padding: 20px 13px 50px;
+  }
+
+  .panel {
+    padding: 19px;
+  }
+
+  .challenge-row {
+    padding: 14px 12px;
+    gap: 10px;
+  }
+
+  .challenge-title {
+    font-size: 14px;
+  }
+
+  .challenge-state {
+    font-size: 11px;
+  }
+
+  .workspace-title {
+    font-size: 23px;
+  }
+
+  .btn {
+    padding: 10px 13px;
+  }
 }
 </style>
 </head>
@@ -415,261 +650,300 @@ footer {
   <a class="logo" href="./index.html">
     Query<span>Quest</span>
   </a>
-  <a class="back" href="./index.html">
-    ← Homepage
-  </a>
+
+  <nav>
+    <a href="./index.html">Home</a>
+    <a href="./basic-sql.html">SQL Queries</a>
+  </nav>
 </header>
 
 <section class="hero">
-  <span class="eyebrow">
-    FREE SQL PRACTICE
-  </span>
+  <div class="hero-inner">
 
-  <h1>5 Fun SQL Challenges</h1>
-
-  <p>
-    Welcome to ShopSmart! Explore the store's
-    database, solve five simple business
-    challenges and earn your SQL Explorer reward.
-  </p>
-
-  <div class="stats">
-    <div class="stat">
-      <strong id="completed">0/5</strong>
-      <small>Challenges completed</small>
+    <div class="eyebrow">
+      QUERYQUEST / FREE SQL PRACTICE
     </div>
 
-    <div class="stat">
-      <strong id="points">0 XP</strong>
-      <small>Points earned</small>
-    </div>
-  </div>
+    <h1>Practice SQL with Real Business Questions</h1>
 
-  <div class="progress">
-    <div id="progressBar"></div>
+    <p>
+      Welcome to ShopSmart. Explore the database,
+      write SQL queries, and solve five practical
+      challenges at your own pace.
+    </p>
+
+    <div class="progress-summary">
+      <span id="progressText">
+        0 of 5 challenges completed
+      </span>
+
+      <span id="pointsText">
+        0 XP earned
+      </span>
+    </div>
+
+    <div class="progress-track">
+      <div id="progressBar"></div>
+    </div>
+
   </div>
 </section>
 
 <main>
 
-  <!-- FIRST: DATABASE -->
-  <section class="card" id="database">
+  <!-- STEP 1: DATABASE -->
+  <section class="panel" id="database">
 
-    <span class="label">
-      STEP 1 · EXPLORE THE DATABASE
-    </span>
+    <div class="section-kicker">
+      01 / Explore the database
+    </div>
 
-    <h2>🗄️ ShopSmart Database</h2>
+    <div class="section-head">
+      <div>
+        <h2>ShopSmart Database</h2>
+        <p class="description">
+          Review the available tables before solving
+          the questions. Select a table to view its records.
+        </p>
+      </div>
 
-    <p>
-      Before solving any questions, look at
-      the data available in ShopSmart.
-    </p>
+      <span class="mini-label">3 tables available</span>
+    </div>
 
-    <p>
-      We have three tables. Click each
-      table name to explore its records.
-    </p>
-
-    <div class="table-tabs">
-      <button class="tab active"
-              data-table="products">
-        📦 Products
+    <div class="tabs">
+      <button class="tab active" data-table="products">
+        products
       </button>
 
-      <button class="tab"
-              data-table="customers">
-        👥 Customers
+      <button class="tab" data-table="customers">
+        customers
       </button>
 
-      <button class="tab"
-              data-table="orders">
-        🛒 Orders
+      <button class="tab" data-table="orders">
+        orders
       </button>
     </div>
 
-    <p class="small" id="tableInfo">
-      Loading sample data...
-    </p>
+    <div class="table-frame">
+      <div class="table-heading">
+        <span id="tableName">products</span>
+        <span id="tableCount">8 records</span>
+      </div>
 
-    <div class="table-scroll" id="dataset">
-      Loading database...
+      <div class="table-scroll" id="databaseTable"></div>
     </div>
 
-    <p class="small">
-      All records are fictional and created
-      for SQL practice.
+    <p class="description">
+      Sample data is fictional and created
+      for SQL learning.
     </p>
 
   </section>
 
-  <!-- SECOND: CHALLENGE SELECTION -->
-  <section class="card">
+  <!-- STEP 2: CHALLENGE LIST -->
+  <section class="panel">
 
-    <span class="label">
-      STEP 2 · CHOOSE YOUR CHALLENGE
-    </span>
+    <div class="section-kicker">
+      02 / Choose a challenge
+    </div>
 
-    <h2>🎯 Your 5 SQL Challenges</h2>
+    <h2>Your 5 SQL Challenges</h2>
 
-    <p>
-      Start with Challenge 1.
-      Each completed challenge earns 100 XP.
-      You can practise them again anytime.
+    <p class="description">
+      Select a question to begin.
+      Each successfully completed challenge earns 100 XP.
     </p>
 
-    <div class="mission-grid" id="missionList"></div>
+    <div class="challenge-list" id="challengeList"></div>
 
   </section>
 
-  <!-- THIRD: ACTIVE CHALLENGE -->
-  <section class="card" id="practice">
+  <!-- STEP 3: SQL WORKSPACE -->
+  <section class="panel" id="workspace">
 
-    <span class="label" id="missionNumber">
-      CHALLENGE 01
-    </span>
+    <div class="section-head">
+      <div class="section-kicker">
+        03 / SQL Workspace
+      </div>
 
-    <h2 id="missionTitle">
-      Loading Challenge...
+      <span class="mini-label" id="challengeCounter">
+        Challenge 1 of 5
+      </span>
+    </div>
+
+    <h2 class="workspace-title" id="challengeTitle">
+      Loading challenge...
     </h2>
 
-    <div class="story">
-      <strong>📖 Your Story</strong>
-      <p id="missionStory"></p>
+    <p class="story" id="challengeStory"></p>
+
+    <div class="task-box">
+      <h3>Your task</h3>
+
+      <p id="challengeQuestion"></p>
+
+      <span class="mini-label" id="requiredColumns"></span>
     </div>
 
-    <p class="question" id="missionQuestion"></p>
+    <div class="editor-head">
+      <h3>SQL Editor</h3>
+      <span class="mini-label">SQLite</span>
+    </div>
 
-    <p class="small" id="missionColumns"></p>
+    <div class="editor-frame">
+      <div class="editor-top">query.sql</div>
 
-    <h3>✍️ Write Your SQL Query</h3>
+      <textarea
+        id="sqlEditor"
+        spellcheck="false"
+        aria-label="Write your SQL query"
+        placeholder="-- Write your SQL query here"></textarea>
+    </div>
 
-    <textarea id="sqlEditor"
-      spellcheck="false"
-      placeholder="-- Write your SQL query here"
-      aria-label="SQL query editor"></textarea>
-
-    <div class="buttons">
-
-      <button class="btn"
-              id="run" disabled>
-        ▶ Run SQL
+    <div class="actions">
+      <button class="btn" id="runButton" disabled>
+        Run SQL
       </button>
 
-      <button class="btn dark"
-              id="check" disabled>
-        ✓ Check Answer
+      <button class="btn dark" id="checkButton" disabled>
+        Check Answer
       </button>
 
-      <button class="btn secondary"
-              id="hint">
-        💡 Hint
+      <button class="btn secondary" id="hintButton">
+        Get Hint
       </button>
 
-      <button class="btn secondary"
-              id="clear">
+      <button class="btn secondary" id="clearButton">
         Clear
       </button>
-
     </div>
 
     <div id="hintBox"></div>
 
-    <div id="feedback"
-         class="feedback"
-         role="status"
-         aria-live="polite">
+    <div id="feedback" class="feedback"
+         role="status" aria-live="polite">
       Loading SQL engine...
     </div>
 
-    <div class="buttons">
-
-      <button class="btn secondary"
-              id="solution"
+    <div class="actions">
+      <button class="btn" id="nextButton"
               style="display:none">
-        Show Example Solution
+        Next Challenge
       </button>
+    </div>
 
-      <button class="btn"
-              id="next"
-              style="display:none">
-        Next Challenge →
-      </button>
+    <!-- SOLUTION: NO IMAGE OR ICON -->
+    <div class="solution-panel">
+
+      <div class="solution-heading">
+        <h3>Solution</h3>
+
+        <button class="btn secondary"
+                id="solutionButton">
+          View solution
+        </button>
+      </div>
+
+      <p class="description">
+        Try writing the query yourself first.
+        You can open the solution whenever
+        you need help.
+      </p>
+
+      <div id="solutionContent">
+
+        <pre class="solution-code"
+             id="solutionCode"></pre>
+
+        <p class="solution-explanation"
+           id="solutionExplanation"></p>
+
+      </div>
 
     </div>
 
-    <pre id="solutionBox"></pre>
-
   </section>
 
-  <!-- FOURTH: RESULTS -->
-  <section class="card">
+  <!-- STEP 4: QUERY RESULTS -->
+  <section class="panel">
 
-    <span class="label">
-      YOUR QUERY OUTPUT
-    </span>
+    <div class="section-kicker">
+      04 / Query output
+    </div>
 
-    <h2>📊 SQL Results</h2>
+    <div class="section-head">
+      <h2>Query Results</h2>
+      <span id="resultCount"></span>
+    </div>
 
-    <p>
-      Run your SQL query to see
-      the records returned by the database.
-    </p>
-
-    <div class="table-scroll" id="results">
-      Your results will appear here.
+    <div class="table-frame">
+      <div class="table-scroll"
+           id="resultTable">
+        <div class="results-placeholder">
+          Run your SQL query to view the results.
+        </div>
+      </div>
     </div>
 
   </section>
 
-  <!-- COMPLETION + PREMIUM PREVIEW -->
-  <section id="celebration">
+  <!-- COMPLETION AND PREMIUM PREVIEW -->
+  <section id="completion">
 
-    <div style="font-size:55px">🏆</div>
+    <div class="eyebrow">
+      LEARNING MILESTONE COMPLETED
+    </div>
 
     <h2>Congratulations, SQL Explorer!</h2>
 
     <p>
-      You've solved all five ShopSmart
-      challenges successfully.
+      You have successfully solved
+      all five ShopSmart SQL challenges.
     </p>
 
-    <div class="reward">
-      ⭐ 5 Challenges Completed · 500 XP
+    <div class="completion-stats">
+      <div class="completion-stat">
+        <strong>5 / 5</strong>
+        <span>Challenges solved</span>
+      </div>
+
+      <div class="completion-stat">
+        <strong>500 XP</strong>
+        <span>Points earned</span>
+      </div>
     </div>
 
     <p>
-      You've learned to retrieve records,
-      filter information and sort results
-      using SQL.
+      You've practised retrieving records,
+      filtering information and sorting results.
     </p>
 
     <div class="premium">
 
-      <h2>Ready for Your Next SQL Adventure?</h2>
+      <h3>Ready to Continue Your SQL Journey?</h3>
 
       <p>
-        Continue learning with the planned
-        QueryQuest Premium experience.
+        QueryQuest Premium is being developed
+        with more structured lessons and
+        real-world SQL exercises.
       </p>
 
       <p>
-        ✓ 50 structured SQL learning lessons<br>
-        ✓ 50 additional SQL practice labs<br>
-        ✓ Real-world business questions<br>
-        ✓ Interview-focused exercises
+        50 SQL learning lessons<br>
+        50 additional SQL practice labs<br>
+        Business scenarios and interview questions<br>
+        Guided solutions
       </p>
 
       <div class="price">₹499</div>
 
       <p>
-        Planned premium access price.
-        Secure enrollment and payments
-        are coming soon.
+        Planned premium price. Enrollment
+        and payments are not available yet.
       </p>
 
-      <a class="btn" href="./index.html">
-        Explore QueryQuest →
+      <a href="./index.html" class="btn">
+        Explore QueryQuest
       </a>
 
     </div>
@@ -680,208 +954,210 @@ footer {
 
 <footer>
   <strong>QueryQuest</strong>
-  <p>
-    Learn SQL. Practice Queries. Master Interviews.
-  </p>
+  <p>Learn SQL. Practice Queries. Master Interviews.</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/sql-wasm.js"></script>
 
 <script>
 
-// SAMPLE SHOPSMART DATABASE
-const databaseSQL = `
-CREATE TABLE products (
-  product_id INTEGER PRIMARY KEY,
-  product_name TEXT,
-  category TEXT,
-  price INTEGER,
-  stock INTEGER
-);
+// SINGLE SOURCE OF SAMPLE DATA
+const sampleData = {
 
-CREATE TABLE customers (
-  customer_id INTEGER PRIMARY KEY,
-  customer_name TEXT,
-  city TEXT
-);
+  products: {
+    columns: [
+      "product_id",
+      "product_name",
+      "category",
+      "price",
+      "stock"
+    ],
+    rows: [
+      [1,"Wireless Mouse","Electronics",799,8],
+      [2,"Bluetooth Speaker","Electronics",2299,4],
+      [3,"USB-C Cable","Electronics",399,25],
+      [4,"Notebook","Stationery",149,6],
+      [5,"Travel Mug","Lifestyle",599,15],
+      [6,"Desk Lamp","Lifestyle",1299,3],
+      [7,"Backpack","Lifestyle",1799,10],
+      [8,"Pen Set","Stationery",249,40]
+    ]
+  },
 
-CREATE TABLE orders (
-  order_id INTEGER PRIMARY KEY,
-  customer_id INTEGER,
-  product_id INTEGER,
-  quantity INTEGER,
-  status TEXT
-);
+  customers: {
+    columns: [
+      "customer_id",
+      "customer_name",
+      "city"
+    ],
+    rows: [
+      [1,"Asha","Hyderabad"],
+      [2,"Rahul","Mumbai"],
+      [3,"Priya","Bengaluru"],
+      [4,"Arjun","Hyderabad"],
+      [5,"Neha","Chennai"],
+      [6,"Kabir","Pune"]
+    ]
+  },
 
-INSERT INTO products VALUES
-(1,'Wireless Mouse','Electronics',799,8),
-(2,'Bluetooth Speaker','Electronics',2299,4),
-(3,'USB-C Cable','Electronics',399,25),
-(4,'Notebook','Stationery',149,6),
-(5,'Travel Mug','Lifestyle',599,15),
-(6,'Desk Lamp','Lifestyle',1299,3),
-(7,'Backpack','Lifestyle',1799,10),
-(8,'Pen Set','Stationery',249,40);
+  orders: {
+    columns: [
+      "order_id",
+      "customer_id",
+      "product_id",
+      "quantity",
+      "status"
+    ],
+    rows: [
+      [101,1,2,1,"Delivered"],
+      [102,2,1,2,"Delivered"],
+      [103,1,6,1,"Pending"],
+      [104,3,4,3,"Delivered"],
+      [105,4,7,1,"Delivered"],
+      [106,5,2,2,"Delivered"],
+      [107,2,5,2,"Cancelled"],
+      [108,6,3,4,"Delivered"],
+      [109,4,1,1,"Pending"],
+      [110,3,6,1,"Delivered"],
+      [111,5,4,1,"Delivered"],
+      [112,1,1,1,"Delivered"],
+      [113,6,7,2,"Pending"],
+      [114,2,5,3,"Delivered"],
+      [115,3,8,2,"Cancelled"],
+      [116,4,3,1,"Delivered"],
+      [117,5,2,1,"Delivered"]
+    ]
+  }
+};
 
-INSERT INTO customers VALUES
-(1,'Asha','Hyderabad'),
-(2,'Rahul','Mumbai'),
-(3,'Priya','Bengaluru'),
-(4,'Arjun','Hyderabad'),
-(5,'Neha','Chennai'),
-(6,'Kabir','Pune');
-
-INSERT INTO orders VALUES
-(101,1,2,1,'Delivered'),
-(102,2,1,2,'Delivered'),
-(103,1,6,1,'Pending'),
-(104,3,4,3,'Delivered'),
-(105,4,7,1,'Delivered'),
-(106,5,2,2,'Delivered'),
-(107,2,5,2,'Cancelled'),
-(108,6,3,4,'Delivered'),
-(109,4,1,1,'Pending'),
-(110,3,6,1,'Delivered'),
-(111,5,4,1,'Delivered'),
-(112,1,1,1,'Delivered'),
-(113,6,7,2,'Pending'),
-(114,2,5,3,'Delivered'),
-(115,3,8,2,'Cancelled'),
-(116,4,3,1,'Delivered'),
-(117,5,2,1,'Delivered');
-`;
-
-// FIVE FRIENDLY SQL CHALLENGES
-const missions = [
+// FIVE APPROVED CHALLENGES
+const challenges = [
 
   {
-    icon:"🛍️",
-    title:"Welcome to Your Shop!",
-
+    title: "Explore the Store",
+    subtitle: "Display all products",
     story:
-      "It's your first day working at ShopSmart! " +
-      "The store manager wants you to explore " +
-      "all the products available in the shop.",
-
+      "It's your first day at ShopSmart. " +
+      "The store manager asks you to review " +
+      "the complete product catalog.",
     question:
-      "Can you display every product " +
-      "in the ShopSmart store?",
-
-    columns:
-      "Show all columns from the products table.",
-
-    hints:[
-      "Use SELECT to retrieve data from the products table.",
-      "Try writing: SELECT * FROM products;"
+      "Display all products available in the store.",
+    output: "Required output: all columns from products",
+    hints: [
+      "Use SELECT to retrieve data from a table.",
+      "Try SELECT * FROM products."
     ],
-
-    answer:
-      "SELECT * FROM products;"
+    solution:
+      "SELECT *\nFROM products;",
+    explanation:
+      "SELECT retrieves information. " +
+      "The * symbol selects every column, " +
+      "and FROM products identifies the table.",
+    success:
+      "Excellent! You explored all 8 products."
   },
 
   {
-    icon:"💰",
-    title:"Find a Budget Gift!",
-
+    title: "Find a Budget Gift",
+    subtitle: "Products below ₹500",
     story:
-      "A student has ₹500 and wants to " +
-      "buy a small gift. Help the student " +
-      "find something affordable.",
-
+      "A student wants to buy a gift but " +
+      "has less than ₹500 to spend. " +
+      "Help find affordable products.",
     question:
       "Find products costing less than ₹500.",
-
-    columns:
-      "Show these columns: product_name, price.",
-
-    hints:[
-      "Use the products table and WHERE to filter prices.",
-      "Use WHERE price < 500."
+    output: "Required output: product_name, price",
+    hints: [
+      "Use the products table and filter using WHERE.",
+      "Use the condition WHERE price < 500."
     ],
-
-    answer:
-      "SELECT product_name, price " +
-      "FROM products WHERE price < 500;"
+    solution:
+      "SELECT product_name, price\n" +
+      "FROM products\n" +
+      "WHERE price < 500;",
+    explanation:
+      "WHERE filters the records. " +
+      "The condition price < 500 returns " +
+      "products whose prices are below ₹500.",
+    success:
+      "Great work! You found 3 affordable products."
   },
 
   {
-    icon:"📍",
-    title:"Find Hyderabad Customers!",
-
+    title: "Hyderabad Customers",
+    subtitle: "Find customers by city",
     story:
-      "ShopSmart is organizing a special event " +
-      "for customers living in Hyderabad. " +
-      "The event team needs their names.",
-
+      "ShopSmart is planning a customer event " +
+      "in Hyderabad. The event team needs " +
+      "a list of customers from that city.",
     question:
-      "Can you find customers who live " +
-      "in Hyderabad?",
-
-    columns:
-      "Show only the customer_name column.",
-
-    hints:[
-      "Check the customers table. It has a city column.",
+      "Find the names of customers living in Hyderabad.",
+    output: "Required output: customer_name",
+    hints: [
+      "Look at the customers table and its city column.",
       "Use WHERE city = 'Hyderabad'."
     ],
-
-    answer:
-      "SELECT customer_name " +
-      "FROM customers " +
-      "WHERE city = 'Hyderabad';"
+    solution:
+      "SELECT customer_name\n" +
+      "FROM customers\n" +
+      "WHERE city = 'Hyderabad';",
+    explanation:
+      "The query selects only customer names " +
+      "for records where the city is Hyderabad.",
+    success:
+      "Well done! You found Asha and Arjun."
   },
 
   {
-    icon:"🚨",
-    title:"Oh No! Stock Is Running Out!",
-
+    title: "Low Stock Alert",
+    subtitle: "Find products almost sold out",
     story:
-      "The warehouse manager noticed " +
-      "that a few products are almost sold out. " +
-      "Help identify them before the next sale.",
-
+      "The warehouse manager has noticed " +
+      "that some products are almost sold out. " +
+      "Help find which ones need attention.",
     question:
-      "Find products with fewer than " +
-      "5 items remaining in stock.",
-
-    columns:
-      "Show these columns: product_name, stock.",
-
-    hints:[
-      "Use the products table and check the stock column.",
+      "Find products with fewer than 5 items in stock.",
+    output: "Required output: product_name, stock",
+    hints: [
+      "Use the products table and the stock column.",
       "Use WHERE stock < 5."
     ],
-
-    answer:
-      "SELECT product_name, stock " +
-      "FROM products WHERE stock < 5;"
+    solution:
+      "SELECT product_name, stock\n" +
+      "FROM products\n" +
+      "WHERE stock < 5;",
+    explanation:
+      "The query returns products whose " +
+      "stock value is below 5.",
+    success:
+      "Nice work! You identified 2 low-stock products."
   },
 
   {
-    icon:"🏆",
-    title:"The Top 3 Product Challenge!",
-
+    title: "Top 3 Products",
+    subtitle: "Find the highest-priced products",
     story:
-      "ShopSmart wants to showcase its " +
-      "three most expensive products " +
-      "on the store's homepage.",
-
+      "The ShopSmart manager wants to showcase " +
+      "the store's three most expensive products.",
     question:
-      "Find the top 3 most expensive products, " +
+      "Display the 3 highest-priced products, " +
       "from highest price to lowest.",
-
-    columns:
-      "Show these columns: product_name, price.",
-
-    hints:[
-      "Sort products using ORDER BY price DESC.",
-      "Use ORDER BY price DESC LIMIT 3."
+    output: "Required output: product_name, price",
+    hints: [
+      "Sort the products using ORDER BY price DESC.",
+      "Add LIMIT 3 to return only three products."
     ],
-
-    answer:
-      "SELECT product_name, price " +
-      "FROM products " +
-      "ORDER BY price DESC LIMIT 3;"
+    solution:
+      "SELECT product_name, price\n" +
+      "FROM products\n" +
+      "ORDER BY price DESC\n" +
+      "LIMIT 3;",
+    explanation:
+      "ORDER BY price DESC sorts prices " +
+      "from highest to lowest. " +
+      "LIMIT 3 returns the first three results.",
+    success:
+      "Amazing! You found the 3 highest-priced products."
   }
 
 ];
@@ -890,206 +1166,360 @@ const $ = id => document.getElementById(id);
 
 let SQL;
 let current = 0;
+let initialized = false;
+let solutionVisible = false;
 
-const attempts = missions.map(() => 0);
-const hintCount = missions.map(() => 0);
-const drafts = missions.map(() => "");
+const drafts = challenges.map(() => "");
+const hintSteps = challenges.map(() => 0);
 
-const saved = (() => {
+const storedProgress = (() => {
   try {
-    return JSON.parse(
+    const value = JSON.parse(
       localStorage.getItem("queryquest_easy_labs") || "[]"
     );
+    return Array.isArray(value) ? value : [];
   } catch {
     return [];
   }
 })();
 
-const solved = missions.map(
-  (_,i) => saved[i] === true
+const completed = challenges.map(
+  (_,i) => storedProgress[i] === true
 );
 
+// CREATE DATABASE
+function createDatabase() {
+  const db = new SQL.Database();
+
+  db.run(`
+    CREATE TABLE products (
+      product_id INTEGER PRIMARY KEY,
+      product_name TEXT,
+      category TEXT,
+      price INTEGER,
+      stock INTEGER
+    );
+
+    CREATE TABLE customers (
+      customer_id INTEGER PRIMARY KEY,
+      customer_name TEXT,
+      city TEXT
+    );
+
+    CREATE TABLE orders (
+      order_id INTEGER PRIMARY KEY,
+      customer_id INTEGER,
+      product_id INTEGER,
+      quantity INTEGER,
+      status TEXT
+    );
+  `);
+
+  ["products","customers","orders"].forEach(name => {
+
+    const data = sampleData[name];
+    const placeholders = data.columns.map(() => "?").join(",");
+
+    const statement = db.prepare(
+      "INSERT INTO " + name +
+      " VALUES (" + placeholders + ")"
+    );
+
+    try {
+      data.rows.forEach(row => statement.run(row));
+    } finally {
+      statement.free();
+    }
+  });
+
+  return db;
+}
+
+// RENDER TABLE
+function renderTable(target,columns,rows) {
+  const container = $(target);
+  container.replaceChildren();
+
+  const table = document.createElement("table");
+  const thead = document.createElement("thead");
+  const headerRow = document.createElement("tr");
+
+  columns.forEach(column => {
+    const th = document.createElement("th");
+    th.textContent = column;
+    headerRow.appendChild(th);
+  });
+
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+
+  rows.forEach(row => {
+    const tr = document.createElement("tr");
+
+    row.forEach(value => {
+      const td = document.createElement("td");
+      td.textContent =
+        value === null ? "NULL" : String(value);
+      tr.appendChild(td);
+    });
+
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(tbody);
+  container.appendChild(table);
+}
+
+// SHOW DATABASE FIRST
+function showDatabase(name) {
+  const data = sampleData[name];
+  if (!data) return;
+
+  $("tableName").textContent = name;
+  $("tableCount").textContent =
+    data.rows.length + " records";
+
+  renderTable(
+    "databaseTable",
+    data.columns,
+    data.rows
+  );
+
+  document.querySelectorAll("[data-table]").forEach(
+    button => {
+      const active = button.dataset.table === name;
+      button.classList.toggle("active",active);
+      button.setAttribute("aria-pressed",String(active));
+    }
+  );
+}
+
+// CHALLENGE NAVIGATION
+function renderChallenges() {
+  const container = $("challengeList");
+  container.replaceChildren();
+
+  challenges.forEach((challenge,i) => {
+    const button = document.createElement("button");
+    button.type = "button";
+
+    button.className =
+      "challenge-row" +
+      (current === i ? " active" : "");
+
+    button.setAttribute(
+      "aria-current",
+      current === i ? "step" : "false"
+    );
+
+    const number = document.createElement("span");
+    number.className = "challenge-number";
+    number.textContent =
+      String(i+1).padStart(2,"0");
+
+    const info = document.createElement("span");
+    info.className = "challenge-info";
+
+    const title = document.createElement("span");
+    title.className = "challenge-title";
+    title.textContent = challenge.title;
+
+    const subtitle = document.createElement("span");
+    subtitle.className = "challenge-subtitle";
+    subtitle.textContent = challenge.subtitle;
+
+    info.append(title,subtitle);
+
+    const state = document.createElement("span");
+    state.className = "challenge-state";
+
+    state.textContent = completed[i]
+      ? "Completed"
+      : current === i
+        ? "Selected"
+        : "Open";
+
+    button.append(number,info,state);
+
+    button.onclick = () => {
+      selectChallenge(i);
+
+      $("workspace").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    };
+
+    container.appendChild(button);
+  });
+}
+
+// SELECT CHALLENGE
+function selectChallenge(i) {
+  if (initialized) {
+    drafts[current] = $("sqlEditor").value;
+  }
+
+  current = i;
+  initialized = true;
+  solutionVisible = false;
+
+  const challenge = challenges[i];
+
+  $("challengeCounter").textContent =
+    "Challenge " + (i+1) + " of 5";
+
+  $("challengeTitle").textContent = challenge.title;
+  $("challengeStory").textContent = challenge.story;
+  $("challengeQuestion").textContent =
+    challenge.question;
+
+  $("requiredColumns").textContent =
+    challenge.output;
+
+  $("sqlEditor").value = drafts[i];
+
+  $("solutionContent").style.display = "none";
+  $("solutionButton").textContent = "View solution";
+
+  $("hintBox").style.display = "none";
+
+  $("resultTable").innerHTML =
+    '<div class="results-placeholder">' +
+    'Run your SQL query to view the results.' +
+    '</div>';
+
+  $("resultCount").textContent = "";
+
+  showFeedback(
+    completed[i]
+      ? "This challenge is already completed."
+      : "Write your SQL query and select Run SQL.",
+    completed[i] ? "success" : ""
+  );
+
+  updateNextButton();
+  renderChallenges();
+}
+
+// PROGRESS TRACKING
 function saveProgress() {
   try {
     localStorage.setItem(
       "queryquest_easy_labs",
-      JSON.stringify(solved)
+      JSON.stringify(completed)
     );
   } catch {
-    // Practice continues without saved progress.
+    // Lab works even without local storage.
   }
 }
 
 function updateProgress() {
-  const done = solved.filter(Boolean).length;
+  const count = completed.filter(Boolean).length;
 
-  $("completed").textContent = done + "/5";
-  $("points").textContent = (done * 100) + " XP";
+  $("progressText").textContent =
+    count + " of 5 challenges completed";
+
+  $("pointsText").textContent =
+    (count * 100) + " XP earned";
 
   $("progressBar").style.width =
-    (done * 20) + "%";
+    (count * 20) + "%";
 
-  $("celebration").style.display =
-    done === 5 ? "block" : "none";
+  $("completion").style.display =
+    count === 5 ? "block" : "none";
 
-  renderMissions();
+  renderChallenges();
 }
 
-function renderMissions() {
-  const list = $("missionList");
-  list.replaceChildren();
+function updateNextButton() {
+  const allDone = completed.every(Boolean);
 
-  missions.forEach((mission,i) => {
-    const button = document.createElement("button");
-    button.className =
-      "mission" + (current === i ? " active" : "");
+  const showNext =
+    completed[current] &&
+    (current < challenges.length - 1 || allDone);
 
-    button.type = "button";
-    button.setAttribute(
-      "aria-label",
-      "Challenge " + (i+1) + ": " + mission.title
-    );
+  $("nextButton").style.display =
+    showNext ? "inline-block" : "none";
 
-    const icon = document.createElement("span");
-    icon.className = "mission-icon";
-    icon.textContent = mission.icon;
-
-    const name = document.createElement("span");
-    name.className = "mission-name";
-    name.textContent =
-      "Challenge " + (i+1) + " — " + mission.title;
-
-    const status = document.createElement("span");
-    status.className = "mission-status";
-    status.textContent =
-      solved[i] ? "✓ Completed" : "100 XP";
-
-    button.append(icon,name,status);
-
-    button.onclick = () => selectMission(i);
-
-    list.appendChild(button);
-  });
+  $("nextButton").textContent =
+    current === challenges.length - 1
+      ? "View Completion"
+      : "Next Challenge";
 }
 
-function selectMission(i) {
-  drafts[current] = $("sqlEditor").value;
-  current = i;
+// SHOW FEEDBACK
+function showFeedback(message,type="") {
+  $("feedback").textContent = message;
 
-  const m = missions[i];
-
-  $("missionNumber").textContent =
-    "CHALLENGE " + String(i+1).padStart(2,"0");
-
-  $("missionTitle").textContent =
-    m.icon + " " + m.title;
-
-  $("missionStory").textContent = m.story;
-  $("missionQuestion").textContent = m.question;
-  $("missionColumns").textContent = m.columns;
-
-  $("sqlEditor").value = drafts[i];
-
-  $("hintBox").style.display = "none";
-  $("solutionBox").style.display = "none";
-
-  $("results").textContent =
-    "Run your SQL to see the results.";
-
-  setMessage(
-    solved[i]
-      ? "✓ Already completed! You earned 100 XP."
-      : "Write your query and click Run SQL.",
-    solved[i] ? "success" : ""
-  );
-
-  $("solution").style.display =
-    attempts[i] >= 2 ? "inline-block" : "none";
-
-  $("next").style.display =
-    solved[i] ? "inline-block" : "none";
-
-  $("next").textContent =
-    i === 4
-      ? "See My Reward →"
-      : "Next Challenge →";
-
-  renderMissions();
+  $("feedback").className =
+    "feedback" + (type ? " " + type : "");
 }
 
-function newDatabase() {
-  const db = new SQL.Database();
-  db.run(databaseSQL);
-  return db;
-}
+// RUN SQL AGAINST A FRESH DATABASE
+function executeSQL(query) {
+  const sql = query.trim();
 
-// Only one read-only SELECT statement per run.
-function execute(query) {
-  const q = query.trim();
-
-  if (!/^SELECT\b/i.test(q)) {
+  if (!/^SELECT\b/i.test(sql)) {
     throw new Error(
       "Start your query with SELECT."
     );
   }
 
-  if (/;\s*\S/.test(q) ||
-      /\b(DROP|DELETE|INSERT|UPDATE|ALTER|CREATE|ATTACH|PRAGMA)\b/i.test(q)) {
+  const withoutFinalSemicolon =
+    sql.replace(/;\s*$/,"");
+
+  if (withoutFinalSemicolon.includes(";")) {
     throw new Error(
-      "This lab supports one read-only SELECT query."
+      "Enter one SQL query at a time."
     );
   }
 
-  const db = newDatabase();
+  if (/\b(INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|ATTACH|DETACH|PRAGMA|REPLACE)\b/i.test(sql)) {
+    throw new Error(
+      "This practice area supports read-only SELECT queries."
+    );
+  }
+
+  const db = createDatabase();
 
   try {
-    return db.exec(q);
+    return db.exec(sql);
   } finally {
     db.close();
   }
 }
 
-function displayTable(target,data) {
-  const container = $(target);
-  container.replaceChildren();
-
+// DISPLAY SQL RESULTS
+function displayResults(data) {
   if (!data.length) {
-    container.textContent = "No rows returned.";
+    $("resultTable").textContent =
+      "No results returned.";
+    $("resultCount").textContent = "0 records";
     return;
   }
 
   const result = data[0];
-  const table = document.createElement("table");
-  const head = document.createElement("tr");
 
-  result.columns.forEach(column => {
-    const th = document.createElement("th");
-    th.textContent = column;
-    head.appendChild(th);
-  });
+  renderTable(
+    "resultTable",
+    result.columns,
+    result.values
+  );
 
-  table.appendChild(head);
-
-  result.values.forEach(row => {
-    const tr = document.createElement("tr");
-
-    row.forEach(value => {
-      const td = document.createElement("td");
-
-      td.textContent =
-        value === null ? "NULL" : String(value);
-
-      tr.appendChild(td);
-    });
-
-    table.appendChild(tr);
-  });
-
-  container.appendChild(table);
+  $("resultCount").textContent =
+    result.values.length + " records";
 }
 
+// COMPARE ACTUAL RESULTS WITH EXPECTED RESULTS
 function normalize(data,keepOrder) {
   if (!data.length) return "[]";
+
+  const columns = data[0].columns.map(
+    name => name.toLowerCase()
+  );
 
   const rows = data[0].values.map(
     row => JSON.stringify(row)
@@ -1099,245 +1529,210 @@ function normalize(data,keepOrder) {
     rows.sort();
   }
 
-  return JSON.stringify({
-    columns: data[0].columns.map(
-      c => c.toLowerCase()
-    ),
-    rows: rows
-  });
+  return JSON.stringify({columns,rows});
 }
 
-function setMessage(text,type="") {
-  $("feedback").textContent = text;
-  $("feedback").className =
-    "feedback" + (type ? " " + type : "");
-}
-
+// RUN SQL
 function runQuery() {
   try {
-    const data = execute($("sqlEditor").value);
-    displayTable("results",data);
+    const data = executeSQL(
+      $("sqlEditor").value
+    );
 
-    setMessage(
-      "Your SQL ran successfully! " +
-      "Now click Check Answer.",
+    displayResults(data);
+
+    showFeedback(
+      "Query executed successfully. " +
+      "Select Check Answer to validate your solution.",
       "success"
     );
 
   } catch(error) {
-    setMessage(
+    showFeedback(
       "SQL Error: " + error.message,
       "error"
     );
   }
 }
 
+// CHECK ANSWER
 function checkAnswer() {
   try {
-    const user = execute($("sqlEditor").value);
-    const expected = execute(missions[current].answer);
+    const userResult = executeSQL(
+      $("sqlEditor").value
+    );
 
-    displayTable("results",user);
+    const expectedResult = executeSQL(
+      challenges[current].solution
+    );
+
+    displayResults(userResult);
 
     const keepOrder = current === 4;
 
     const correct =
-      normalize(user,keepOrder) ===
-      normalize(expected,keepOrder);
+      normalize(userResult,keepOrder) ===
+      normalize(expectedResult,keepOrder);
 
     if (correct) {
-      if (!solved[current]) {
-        solved[current] = true;
-        saveProgress();
-      }
 
-      const messages = [
-        "🎉 Excellent! You explored all 8 products!",
-        "🎉 Great job! You found 3 budget gifts!",
-        "🎉 Awesome! You found our Hyderabad customers!",
-        "🎉 Well done! You found the low-stock products!",
-        "🏆 Amazing! You discovered our top 3 products!"
-      ];
+      const firstCompletion = !completed[current];
 
-      setMessage(
-        messages[current] + " +100 XP",
+      completed[current] = true;
+      saveProgress();
+
+      showFeedback(
+        challenges[current].success +
+        (firstCompletion
+          ? " You earned 100 XP."
+          : " Challenge completed."),
         "success"
       );
 
-      $("next").style.display = "inline-block";
-
       updateProgress();
+      updateNextButton();
 
     } else {
-      attempts[current]++;
-
-      setMessage(
-        "Almost there! Check the columns " +
-        "and conditions in the question. " +
-        "You can use a hint and try again.",
+      showFeedback(
+        "Not quite. Check your selected columns " +
+        "and filtering conditions, then try again. " +
+        "You can also use Get Hint.",
         "warning"
       );
-
-      if (attempts[current] >= 2) {
-        $("solution").style.display = "inline-block";
-      }
     }
 
   } catch(error) {
-    attempts[current]++;
-
-    setMessage(
+    showFeedback(
       "SQL Error: " + error.message,
       "error"
     );
-
-    if (attempts[current] >= 2) {
-      $("solution").style.display = "inline-block";
-    }
   }
 }
 
+// HINT
 function showHint() {
-  const i = current;
-  const hints = missions[i].hints;
+  const hints = challenges[current].hints;
 
   const index = Math.min(
-    hintCount[i],
+    hintSteps[current],
     hints.length - 1
   );
 
   $("hintBox").textContent =
-    "💡 " + hints[index];
+    hints[index];
 
   $("hintBox").style.display = "block";
 
-  hintCount[i] = Math.min(
-    hintCount[i] + 1,
+  hintSteps[current] = Math.min(
+    hintSteps[current] + 1,
     hints.length
   );
 }
 
-function showSolution() {
-  $("solutionBox").textContent =
-    missions[current].answer;
+// SOLUTION
+function toggleSolution() {
+  solutionVisible = !solutionVisible;
 
-  $("solutionBox").style.display = "block";
+  $("solutionContent").style.display =
+    solutionVisible ? "block" : "none";
 
-  setMessage(
-    "Review the example and try writing " +
-    "the query yourself.",
-    "warning"
-  );
-}
+  $("solutionButton").textContent =
+    solutionVisible
+      ? "Hide solution"
+      : "View solution";
 
-function showDataset(name) {
-  if (!SQL) return;
+  if (solutionVisible) {
+    $("solutionCode").textContent =
+      challenges[current].solution;
 
-  const db = newDatabase();
-
-  try {
-    const data = db.exec(
-      "SELECT * FROM " + name
-    );
-
-    displayTable("dataset",data);
-
-    $("tableInfo").textContent =
-      "Viewing: " + name +
-      " (" + data[0].values.length + " records)";
-
-    document.querySelectorAll(
-      "[data-table]"
-    ).forEach(button => {
-      button.classList.toggle(
-        "active",
-        button.dataset.table === name
-      );
-    });
-
-  } finally {
-    db.close();
+    $("solutionExplanation").textContent =
+      challenges[current].explanation;
   }
 }
 
-// BUTTON ACTIONS
-$("run").onclick = runQuery;
-$("check").onclick = checkAnswer;
-$("hint").onclick = showHint;
-$("solution").onclick = showSolution;
+// BUTTON EVENTS
+$("runButton").onclick = runQuery;
+$("checkButton").onclick = checkAnswer;
+$("hintButton").onclick = showHint;
+$("solutionButton").onclick = toggleSolution;
 
-$("clear").onclick = () => {
+$("clearButton").onclick = () => {
   $("sqlEditor").value = "";
   drafts[current] = "";
 
-  $("results").textContent =
-    "Your results will appear here.";
+  showFeedback("SQL editor cleared.");
 
-  setMessage("Editor cleared.");
+  $("resultTable").textContent =
+    "Run your SQL query to view the results.";
+
+  $("resultCount").textContent = "";
 };
 
-$("next").onclick = () => {
-  if (current < 4) {
-    selectMission(current + 1);
+$("nextButton").onclick = () => {
+  if (current < challenges.length - 1) {
+    selectChallenge(current + 1);
 
-    $("practice").scrollIntoView({
-      behavior:"smooth",
-      block:"start"
+    $("workspace").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
     });
 
   } else {
-    $("celebration").scrollIntoView({
-      behavior:"smooth",
-      block:"start"
+    $("completion").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
     });
   }
 };
 
-document.querySelectorAll(
-  "[data-table]"
-).forEach(button => {
-  button.onclick = () => {
-    showDataset(button.dataset.table);
-  };
+$("sqlEditor").addEventListener("input",() => {
+  drafts[current] = $("sqlEditor").value;
 });
 
-// INITIALIZE PAGE
-selectMission(0);
+document.querySelectorAll("[data-table]").forEach(
+  button => {
+    button.onclick = () => {
+      showDatabase(button.dataset.table);
+    };
+  }
+);
+
+// INITIAL PAGE CONTENT
+showDatabase("products");
+selectChallenge(0);
 updateProgress();
 
-async function start() {
+// LOAD SQL ENGINE
+async function startSQL() {
   try {
     if (typeof initSqlJs !== "function") {
       throw new Error("SQL engine unavailable");
     }
 
     SQL = await initSqlJs({
-      locateFile: file =>
-        "https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/" + file
+      locateFile:file =>
+        "https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/" +
+        file
     });
 
-    $("run").disabled = false;
-    $("check").disabled = false;
+    $("runButton").disabled = false;
+    $("checkButton").disabled = false;
 
-    showDataset("products");
-
-    setMessage(
-      "✅ Database ready! Explore the tables, " +
-      "then solve Challenge 1.",
+    showFeedback(
+      "Database ready. Write your query to begin.",
       "success"
     );
 
   } catch(error) {
-    setMessage(
-      "Could not load the SQL engine. " +
-      "Check your internet connection " +
-      "and refresh this page.",
+    showFeedback(
+      "Unable to load the SQL engine. " +
+      "Check your internet connection and refresh.",
       "error"
     );
   }
 }
 
-start();
+startSQL();
 
 </script>
 </body>
