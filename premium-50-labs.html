@@ -87,5 +87,233 @@ for(let i=0;i<modules.length;i++){const option=document.createElement('option');
 async function boot(){try{if(typeof initSqlJs!=='function')throw Error('SQL script unavailable');SQL=await initSqlJs({locateFile:file=>'https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/'+file});$('runBtn').disabled=false;$('checkBtn').disabled=false;setFeedback('SQL workspace ready. Explore the tables and start your challenge.','good')}catch(e){setFeedback('Could not load the SQL engine. Check your internet connection and refresh.','error')}}
 selectModule(0);boot();
 </script>
+  <!-- QUERYQUEST PRACTICE PROGRESS + RIGHT-SIDE MODULE NAVIGATION -->
+<style>
+/* Page enhancements only. Lab databases and questions are unchanged. */
+.qq-progress-panel{
+  background:#fff; border:1px solid #e1e8e4; border-radius:13px;
+  padding:23px 26px; margin:0 0 21px;
+  box-shadow:0 3px 15px #122a3608;
+}
+.qq-progress-top{display:flex;justify-content:space-between;align-items:center;gap:24px}
+.qq-progress-kicker{color:#087e74;font-size:11px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase}
+.qq-progress-panel h2{font-size:23px;letter-spacing:-.4px;margin:5px 0;color:#183c43}
+.qq-progress-panel p{font-size:13px;color:#687b83;margin:0}
+.qq-progress-count{text-align:right;white-space:nowrap;color:#10263a}
+.qq-progress-count strong{font-size:28px;line-height:1.1}
+.qq-progress-count small{display:block;font-size:12px;color:#687b83}
+.qq-progress-track{height:8px;background:#e7efeb;border-radius:50px;overflow:hidden;margin-top:18px}
+.qq-progress-track>div{width:0%;height:100%;background:#087e74;transition:width .2s}
+.qq-progress-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:10px;color:#687b83;font-size:12px}
+.qq-split{display:grid;grid-template-columns:minmax(0,1fr) 310px;align-items:start;gap:21px}
+.qq-left{min-width:0}
+.qq-left .module-controls{display:none!important}
+.qq-left .work-layout{display:block}
+.qq-left .work-layout>.section{margin-bottom:18px}
+.qq-left .questions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:10px 14px 16px}
+.qq-left .question-row{border:1px solid #e1e8e4;border-radius:8px;padding:13px 11px}
+.qq-left .question-row.active{border-color:#99cbb9;background:#eaf6f0}
+.qq-left .question-heading{padding-bottom:4px}
+.qq-current-name{margin:8px 0 5px!important;color:#163b40!important}
+.qq-module-area{position:sticky;top:18px;overflow:visible}
+.qq-sidebar-header{padding:15px 16px 10px;border-bottom:1px solid #e1e8e4;background:white}
+.qq-sidebar-header h2{font-size:20px;margin:5px 0 3px!important}
+.qq-sidebar-header p{margin:0!important}
+.qq-module-list{padding:7px}
+.qq-module-button{width:100%;display:block;text-align:left;border:1px solid transparent;border-radius:8px;background:white;padding:8px 10px;margin:0;color:#213541}
+.qq-module-button:hover{background:#f6faf7}
+.qq-module-button.active{border-color:#a8cfc1;background:#eaf6f0;box-shadow:inset 3px 0 #087e74}
+.qq-module-titleline{display:flex;align-items:flex-start;gap:10px}
+.qq-module-index{font-size:13px;font-weight:800;color:#708b86;min-width:23px}
+.qq-module-label{font-size:12.5px;font-weight:700;line-height:1.32;flex:1}
+.qq-module-bottom{display:flex;align-items:center;justify-content:space-between;margin:4px 0 0 33px;gap:8px}
+.qq-module-bottom small{font-size:11px;color:#687b83}
+.qq-status{font-size:10px;line-height:1.4;font-weight:700;border-radius:4px;padding:3px 7px;color:#566f68;background:#f0f3f1}
+.qq-status.pending{color:#8f661f;background:#fff5df}
+.qq-status.completed{color:#09684e;background:#e2f5e9}
+.qq-subbar{height:2px;border-radius:3px;background:#e7efeb;margin:5px 0 0 33px;overflow:hidden}
+.qq-subbar>span{display:block;height:100%;background:#087e74}
+/* The dedicated progress panel replaces the smaller progress bar in the hero. */
+.hero-progress{display:none}
+@media(max-width:1040px){.qq-split{grid-template-columns:minmax(0,1fr) 275px;gap:14px}}
+@media(max-width:760px){
+  .qq-split{grid-template-columns:1fr}
+  .qq-module-area{position:static;overflow:visible;order:-1}
+  .qq-left{order:1}
+  .qq-module-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+  .qq-left .questions{grid-template-columns:1fr}
+  .qq-progress-panel{padding:18px}
+}
+@media(max-width:430px){
+  .qq-module-list{grid-template-columns:1fr}
+  .qq-progress-top{align-items:flex-start}
+  .qq-progress-count strong{font-size:22px}
+  .qq-progress-panel h2{font-size:19px}
+}
+</style>
+<script>
+/* Adds navigation and status without replacing the original SQL lab data. */
+(() => {
+  'use strict';
+  const qqPage = document.querySelector('main.page');
+  const qqDataset = document.getElementById('dataset');
+  const qqWork = qqPage && qqPage.querySelector('.work-layout');
+  const qqIntro = qqPage && qqPage.querySelector('section.section');
+  if (!qqPage || !qqDataset || !qqWork || !qqIntro ||
+      typeof modules === 'undefined' || typeof completed === 'undefined') return;
+
+  // Preserve drafts on refresh as well as existing completed-question progress.
+  const qqDraftKey = 'queryquest_practice_50_drafts_v1';
+  try {
+    const stored = JSON.parse(localStorage.getItem(qqDraftKey) || '[]');
+    if (Array.isArray(stored)) {
+      for (let i=0;i<50;i++) {
+        if (typeof stored[i] === 'string') drafts[i] = stored[i];
+      }
+      document.getElementById('sqlEditor').value = drafts[0] || '';
+    }
+  } catch (_) { /* Private browsing can disable local storage. */ }
+  function qqSaveDrafts() {
+    try { localStorage.setItem(qqDraftKey, JSON.stringify(drafts)); } catch (_) {}
+  }
+
+  const qqProgress = document.createElement('section');
+  qqProgress.className = 'qq-progress-panel';
+  qqProgress.setAttribute('aria-label','Your Learning Progress');
+  qqProgress.innerHTML = `
+    <div class="qq-progress-top">
+      <div>
+        <div class="qq-progress-kicker">YOUR PRACTICE JOURNEY</div>
+        <h2>Your Learning Progress</h2>
+        <p>Work through 50 SQL challenges across 10 modules.</p>
+      </div>
+      <div class="qq-progress-count">
+        <strong id="qqTotalDone">0 / 50</strong>
+        <small>labs completed</small>
+      </div>
+    </div>
+    <div class="qq-progress-track" role="progressbar" aria-label="Overall completion"
+         aria-valuemin="0" aria-valuemax="50" aria-valuenow="0" id="qqBarOuter">
+      <div id="qqBarInner"></div>
+    </div>
+    <div class="qq-progress-foot">
+      <span id="qqModulesDone">0 of 10 modules completed</span>
+      <span id="qqPercent">0% complete</span>
+    </div>`;
+
+  const qqSplit = document.createElement('div');
+  qqSplit.className = 'qq-split';
+  const qqLeft = document.createElement('div');
+  qqLeft.className = 'qq-left';
+  qqLeft.id = 'qqLeftColumn';
+  const qqAside = document.createElement('aside');
+  qqAside.className = 'section qq-module-area';
+  qqAside.setAttribute('aria-label','All ten SQL practice modules');
+  qqAside.innerHTML = `
+    <div class="qq-sidebar-header">
+      <div class="step">10 MODULES / 50 CHALLENGES</div>
+      <h2>Practice Modules</h2>
+      <p class="muted">Choose a module to continue learning.</p>
+    </div>
+    <nav id="qqModuleList" class="qq-module-list" aria-label="Practice modules"></nav>`;
+
+  qqPage.insertBefore(qqProgress,qqIntro);
+  qqPage.insertBefore(qqSplit,qqIntro);
+  qqSplit.append(qqLeft,qqAside);
+  qqLeft.append(qqIntro,qqDataset,qqWork);
+
+  // Use the existing module and question sections in the left workspace.
+  const introHeading = qqIntro.querySelector('h2');
+  if (introHeading) introHeading.textContent = 'Your Current Module';
+  const currentName = document.createElement('h2');
+  currentName.className = 'qq-current-name';
+  currentName.id = 'qqCurrentModuleName';
+  if (introHeading) introHeading.insertAdjacentElement('afterend',currentName);
+  const introNote = qqIntro.querySelector('.muted');
+  if (introNote) introNote.textContent = 'Explore the database, choose a challenge, and solve it in the SQL editor below.';
+
+  function qqModuleStatus(index) {
+    const start = index * 5;
+    const solved = completed.slice(start,start+5).filter(Boolean).length;
+    const hasDraft = drafts.slice(start,start+5).some(text => text.trim().length > 0);
+    const state = solved === 5 ? 'Completed' : solved > 0 || hasDraft ? 'Pending' : 'Not Started';
+    return {solved,state};
+  }
+
+  function qqRender() {
+    const total = completed.filter(Boolean).length;
+    const completedModules = modules.filter((_,i) => qqModuleStatus(i).solved === 5).length;
+    document.getElementById('qqTotalDone').textContent = total + ' / 50';
+    document.getElementById('qqModulesDone').textContent = completedModules + ' of 10 modules completed';
+    document.getElementById('qqPercent').textContent = (total * 2) + '% complete';
+    document.getElementById('qqBarInner').style.width = (total * 2) + '%';
+    document.getElementById('qqBarOuter').setAttribute('aria-valuenow',String(total));
+    document.getElementById('qqCurrentModuleName').textContent =
+      String(activeModule+1).padStart(2,'0') + ' · ' + modules[activeModule].name;
+
+    const list = document.getElementById('qqModuleList');
+    list.replaceChildren();
+    modules.forEach((mod,i) => {
+      const {solved,state} = qqModuleStatus(i);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'qq-module-button' + (i===activeModule?' active':'');
+      btn.setAttribute('aria-current',i===activeModule?'step':'false');
+      btn.setAttribute('aria-label',`Module ${i+1}: ${mod.name}, ${state}, ${solved} of 5 completed`);
+
+      const line = document.createElement('div');
+      line.className = 'qq-module-titleline';
+      const number = document.createElement('span');
+      number.className = 'qq-module-index';
+      number.textContent = String(i+1).padStart(2,'0');
+      const label = document.createElement('span');
+      label.className = 'qq-module-label';
+      label.textContent = mod.name;
+      line.append(number,label);
+
+      const bottom = document.createElement('div');
+      bottom.className = 'qq-module-bottom';
+      const status = document.createElement('span');
+      status.className = 'qq-status ' + (state==='Pending'?'pending':state==='Completed'?'completed':'');
+      status.textContent = state;
+      const count = document.createElement('small');
+      count.textContent = solved + '/5 done';
+      bottom.append(status,count);
+      const subbar = document.createElement('div');
+      subbar.className = 'qq-subbar';
+      const fill = document.createElement('span');
+      fill.style.width = (solved*20)+'%';
+      subbar.appendChild(fill);
+
+      btn.append(line,bottom,subbar);
+      btn.addEventListener('click', () => {
+        selectModule(i);
+        document.getElementById('qqLeftColumn').scrollIntoView({behavior:'smooth',block:'start'});
+      });
+      list.appendChild(btn);
+    });
+  }
+
+  // Extend the existing functions: do not overwrite their SQL logic or progress key.
+  const qqOldProgress = updateProgress;
+  updateProgress = function () { qqOldProgress(); qqRender(); };
+  const qqOldSelect = selectModule;
+  selectModule = function(i) { qqOldSelect(i); qqSaveDrafts(); qqRender(); };
+
+  const qqSqlEditor = document.getElementById('sqlEditor');
+  qqSqlEditor.addEventListener('input', () => {
+    drafts[indexOfLab(activeModule,activeLab)] = qqSqlEditor.value;
+    qqSaveDrafts();
+    qqRender();
+  });
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    qqSaveDrafts(); qqRender();
+  });
+  // Keep drafts when students navigate to another question or leave the page.
+  window.addEventListener('pagehide', qqSaveDrafts);
+  qqRender();
+})();
+</script>
+<!-- END QUERYQUEST PRACTICE PROGRESS UPDATE -->
 </body>
 </html>
